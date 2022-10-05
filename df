@@ -1,0 +1,143 @@
+[33mcommit 04727b7538dabc065ce189f7941700c16a9155ca[m[33m ([m[1;36mHEAD -> [m[1;32mDevon[m[33m, [m[1;31morigin/Devon[m[33m)[m
+Author: R Devon Brewster <devonbrewster42@gmail.com>
+Date:   Fri Oct 30 12:44:05 2020 -0500
+
+    small changes
+
+[33mcommit 22a30d952e56c04e635267767e5bede5e481a8ae[m
+Author: R Devon Brewster <devonbrewster42@gmail.com>
+Date:   Sun Oct 25 11:40:58 2020 -0500
+
+    Added labels for chess board
+
+[33mcommit 3f1a62820565af589fc3f1e15f52fd433758b0b7[m
+Author: R Devon Brewster <devonbrewster42@gmail.com>
+Date:   Fri Oct 23 13:42:10 2020 -0500
+
+    Cleaning up effects, close to finished
+
+[33mcommit d006871bc1057b0db7d142b6f01680d81b779a22[m
+Author: R Devon Brewster <devonbrewster42@gmail.com>
+Date:   Tue Oct 13 13:04:23 2020 -0500
+
+    added forfeit/restart/newGame and more
+
+[33mcommit 4032594a6888ca12cd09d77ff9da4e0631ebe2f7[m
+Author: R Devon Brewster <devonbrewster42@gmail.com>
+Date:   Fri Oct 9 10:15:27 2020 -0500
+
+    I dunno lol
+
+[33mcommit c56b42d489cc1d97fb72785c8dcdf6b44a9a7bd2[m
+Author: R Devon Brewster <devonbrewster42@gmail.com>
+Date:   Mon Sep 14 13:35:49 2020 -0500
+
+    FIXED EXCEPTION CATCHING
+
+[33mcommit b90e656daf4788632a8b7e5188f2c1567aa77fab[m
+Author: R Devon Brewster <devonbrewster42@gmail.com>
+Date:   Sun Sep 13 12:32:07 2020 -0500
+
+    couple tweaks
+
+[33mcommit 3591eda17a41a5828ffd89ea1550bbc6d8f2ca61[m
+Author: R Devon Brewster <devonbrewster42@gmail.com>
+Date:   Sat Sep 5 11:50:27 2020 -0500
+
+    Styling and such
+
+[33mcommit fb4f85f3576cffe18f4750ae44c722d5d2e6563c[m
+Author: R Devon Brewster <devonbrewster42@gmail.com>
+Date:   Fri Sep 4 10:46:52 2020 -0500
+
+    few tweaks
+
+[33mcommit 924e41ae5773e6ce6adbd7f1b01b60e7bf18e619[m
+Author: R Devon Brewster <devonbrewster42@gmail.com>
+Date:   Sun Aug 30 12:33:28 2020 -0500
+
+    Styling and stacking
+
+[33mcommit 10d472925ffa2ecd9fe24e11602b7f07c23af46c[m
+Author: R Devon Brewster <devonbrewster42@gmail.com>
+Date:   Sat Aug 29 11:23:41 2020 -0500
+
+    Adding moves list
+
+[33mcommit 93a9c7df646d6b9c9b8c88820b67cdb60cebe2c6[m
+Author: R Devon Brewster <devonbrewster42@gmail.com>
+Date:   Thu Aug 27 11:24:35 2020 -0500
+
+    adding extras
+
+[33mcommit 887ac4cf29d2884b62058e2424ef18186078e5c1[m
+Author: R Devon Brewster <devonbrewster42@gmail.com>
+Date:   Wed Aug 26 10:50:34 2020 -0500
+
+    Finished basics
+
+[33mcommit 281738863fa295db5ebd6879ce0c2ff05fda26ec[m
+Author: R Devon Brewster <devonbrewster42@gmail.com>
+Date:   Tue Aug 25 21:21:10 2020 -0500
+
+    added count conversion
+
+[33mcommit 2801d7e9d1bc468fa77c33807c62a6332d2bb1ab[m
+Author: R Devon Brewster <devonbrewster42@gmail.com>
+Date:   Tue Aug 25 16:43:49 2020 -0500
+
+    Special moves added and styling tweaks
+
+[33mcommit 41676d4ec35c207db6e6edaf1b6de060d8ba02ca[m
+Author: R Devon Brewster <devonbrewster42@gmail.com>
+Date:   Mon Aug 24 12:58:56 2020 -0500
+
+    Finally working
+
+[33mcommit 30c4565e51263ff717606fa6b796a51ed4246abe[m
+Author: R Devon Brewster <devonbrewster42@gmail.com>
+Date:   Sun Aug 23 18:09:24 2020 -0500
+
+    Finished body of game
+
+[33mcommit a51189455b462a00d63f9205433a8c928c0d8041[m
+Author: R Devon Brewster <devonbrewster42@gmail.com>
+Date:   Fri Aug 21 15:22:02 2020 -0500
+
+    Working on gameplay
+
+[33mcommit 4b9cb40dd5b6b88f1eff2639be5ae3386729a92d[m
+Author: R Devon Brewster <devonbrewster42@gmail.com>
+Date:   Wed Aug 19 14:43:23 2020 -0500
+
+    Finished rendering board and images
+
+[33mcommit 74e8042aabafc44aca524eb138c23830360eaafa[m
+Author: R Devon Brewster <devonbrewster42@gmail.com>
+Date:   Tue Aug 18 18:35:08 2020 -0500
+
+    Still working on retreiving API
+
+[33mcommit 24670998b058a0248056960c246dad1769fd65c8[m
+Author: R Devon Brewster <devonbrewster42@gmail.com>
+Date:   Tue Aug 18 10:51:56 2020 -0500
+
+    rendering data
+
+[33mcommit a1f8eef4664e66d1449d9eaac577936def8e162f[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m
+Author: R Devon Brewster <devonbrewster42@gmail.com>
+Date:   Mon Aug 17 16:44:29 2020 -0500
+
+    added API
+
+[33mcommit 78306d7ad265201fc3065569aa3cf3cdf1ba7e74[m
+Author: R Devon Brewster <devonbrewster42@gmail.com>
+Date:   Mon Aug 17 14:22:32 2020 -0500
+
+    Welcome page and Board set up
+
+[33mcommit bfe172e0ebd863f951621cea0c28a936260d0675[m
+Author: R Devon Brewster <devonbrewster42@gmail.com>
+Date:   Sun Aug 16 11:01:45 2020 -0500
+
+    Initialize project using Create React App

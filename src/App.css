@@ -1,0 +1,108 @@
+.details {
+  text-align: center;
+  margin: 1%;
+  margin-left: 27%;  
+  height: 120px;
+  width: 40%;  
+  color: red;
+}
+
+.bl {
+  background-color: black;
+  border: 3px solid rgb(226, 217, 217);
+}
+.w {
+  background-color: rgb(226, 217, 217);
+  border: 3px solid black;
+}
+
+.detailButtons {
+  background-color: red;
+  color: white;
+  border-radius: 5px;
+  width: 70px;  
+}
+
+.tooltip{
+  background-color: red;
+  color: white;
+  border-radius: 10px;
+  width: 200px;
+  position: relative;
+  /* border: 1px solid black; */
+}
+.tooltip .tooltiptext {
+  visibility: hidden;
+  background-color: black;
+  color: white;
+  position: absolute;
+}
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.r {
+  margin-left: 35%;
+}
+
+#mainMoves{
+  width: 30%;
+  margin-left: 2%;
+  display: inline-block;
+  margin-top: auto;
+  height: 820px;  
+  border: 2px solid royalblue;
+}
+.movesList{
+  overflow: scroll;
+  width: 100%;
+  height: 100%;  
+  background-color: slategray;
+  
+}
+.mHeader{
+  text-align: center;
+}
+
+.click{
+  position: relative;
+}
+.click .tooltiptext {
+  visibility: hidden;
+  background-color: black;
+  color: white;
+  position: absolute;
+  font-size: small;
+  border-radius: 10px;
+  padding: 5px 8px 5px 8px;
+}
+
+.click:hover .tooltiptext {
+  visibility: visible;
+}
+
+.check{
+  text-decoration: wavy;
+  /* background-color: royalblue; */
+  width: 450px;
+  margin: auto;
+  animation-name: check;
+  animation-duration: 10s;
+  border-radius: 10px;
+}
+
+@keyframes check {
+  from {background-color: black;}
+  to {background-color: royalblue;}
+}
+
+@media screen and (max-width: 900px){
+    .details {
+      width: 60%;
+    }
+    #mainMoves {
+      display: block;
+      width: 80%;
+      height: 250px;
+    }
+}

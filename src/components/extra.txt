@@ -1,0 +1,104 @@
+    // function getClassName(i, j){
+    //     console.log(i, j)
+    //     //console.log(e.currentTarget)
+    //     let base = "squares ";
+    //     if (clicked){
+    //         return base + "g";
+    //     }else {
+    //         return base + "y";
+    //     }
+    // }
+        // if (clicked && e.currentTarget.id == i * 10 + j){            
+        //         return base + "b";            
+        // } else {
+        //     if ((i + j) % 2 === 1){                
+        //         return base + "g";
+        //     }else {
+        //         return base + "y";
+        //     }
+        // }
+    
+    // function Row(i){
+    //     const newRow = [];
+    //     let count = i * 8;   
+    //     let squareImp;     
+    //     for (let j = 0; j<8; j++){            
+    //         if ((i + j) % 2 === 1){                
+    //             squareImp = squareStyle + "g";
+    //         }else {
+    //             squareImp = squareStyle + "y";
+    //         }
+    //             newRow.push(<div key={count} id={i * 10 + j} className={getClassName(i, j)} onClick={isMove ? selectMove : props.data[count].name !== null ? selectPiece : undefined  }>
+    //                  { (props.data[count].name != null) &&
+    //                     <img src={images[props.data[count].name]}
+    //                     className="icons"
+    //                     alt="chess piece" />    
+    //                 }
+    //             </div>)            
+    //         count++;
+            
+    //     }
+    //     return <div className="rows" key={i}>{newRow}</div>;
+    // }
+    // function Row(i){
+    //     const newRow = [];
+    //     let count = i * 8;        
+    //     for (let j = 0; j<8; j++){
+    //         if ((i + j) % 2 === 1){                
+    //             newRow.push(<div key={count} id={i * 10 + j} className="squares g" onClick={isMove ? selectMove : props.data[count].name !== null ? selectPiece : undefined }>
+    //                { (props.data[count].name != null) &&
+    //                     <img src={images[props.data[count].name]}
+    //                     className="icons"
+    //                     alt="chess piece" />    
+    //                 }                    
+    //             </div>)
+    //         }else {
+    //             newRow.push(<div key={count} id={i * 10 + j} className="squares y" onClick={isMove ? selectMove : props.data[count].name !== null ? selectPiece : undefined  }>
+    //                  { (props.data[count].name != null) &&
+    //                     <img src={images[props.data[count].name]}
+    //                     className="icons"
+    //                     alt="chess piece" />    
+    //                 }
+    //             </div>)
+    //         }
+    //         count++;
+            
+    //     }
+    //     return <div className="rows" key={i}>{newRow}</div>;
+    // }
+    //newRow.push(<div key={count} id={i * 10 + j} className="squares g" onClick={isMove ? selectMove : (props.data[count].name != null && hasPiece(props.data[count].name)) ? selectPiece : undefined }></div>
+    //(props.data[count].name != null && props.data[count].isWhite == isWhite))
+
+
+
+        // const showBoard = () => {
+    //     DataService.getBoard()
+    //         .then(res => {
+    //             console.log(res.data);
+    //             let newData = res.data;
+    //             setData([...newData]);
+    //         })
+    //         .catch(error => console.log(error))
+    // }
+
+    // useEffect (() => {
+    //     showBoard();
+    //  },[]); 
+    //  <MovesList updateMovesList={updateMovesList} /> 
+
+
+
+
+
+    MOVES LIST
+
+    //console.log(props.moves)
+    // let [showMoves, setShowMoves] = useState(false);    
+    // // let [moves, setMoves] = useState(props.moves)    
+
+    // const showDaMoves = () => {        
+    //     setShowMoves((prev) => !prev);
+    // }
+    {/* {props.moves.moves &&                
+                    <button className="detailButtons r" onClick={() => showDaMoves()}>Show Moves</button>
+                } */}

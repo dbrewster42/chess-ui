@@ -1,0 +1,38 @@
+* {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+#body {
+    display: flex;
+}
+#left {
+    width: 45%;
+    margin: 2.5%;
+    display: inline-block;
+}
+#right {
+    width: 45%;
+    display: inline-block;
+}
+
+h1 {
+    text-align: center;
+}
+p {
+    margin-left: 75x;
+}
+.blues {   
+    margin-left: 180px;
+    color: blue;
+}
+.start {   
+    text-decoration: underline;
+    animation-name: starter;
+    animation-duration: 10s;
+    color: red;
+}
+@keyframes starter {
+    from {color: red;}
+    to {color: green;}
+}
