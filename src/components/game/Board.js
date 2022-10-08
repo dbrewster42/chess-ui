@@ -5,13 +5,13 @@ import Details from '../Details';
 import MovesList from '../MovesList';
 import Square from './Square';
 import Modal from "react-modal";
+import { useParams } from "react-router-dom";
 
 function importAll(r) {
     let images = {};
     r.keys().forEach((item) => {        
         images[item.replace("./", "")] = r(item);
     });
-    // console.log(images);
     return images;
   }
 
@@ -21,11 +21,16 @@ const Board = (props) => {
     let [isWhite, setIsWhite] = useState(true);
     let [status, setStatus] = useState(props.data[64]);
     let [errorMessage, setErrorMessage] = useState('');
-    //console.log(status);
     const [moves, setMoves] = useState([]);
     let [showModal, setShowModal] = useState(false);
-    let [showCheck, setShowCheck] = useState(true);
-    
+    let [showCheck, setShowCheck] = useState(true);    
+    const [undo] = useState(props.undo);
+    //console.log(status);
+    let [showMoves, setShowMoves] = useState(false);   
+    let [autoToggle, setAutoToggle] = useState(true);
+    const params = useParams();    
+    const gameId = params.gameId;    
+
     const images = importAll(require.context("../../../public/pics", false, /\.(pn?g)$/));
     
     if (!status.active && showCheck){
@@ -35,9 +40,24 @@ const Board = (props) => {
         setShowCheck(false);
         toggleModal("CHECK!");
     }
+   
+    if ((autoToggle) && moves.moves){
+        if (moves.moves.length === 4){
+            setShowMoves(true);
+            setAutoToggle(false)
+        } 
+    } 
+
+    const toggleMove = () => {
+        if (moves.moves){
+            setShowMoves((prev) => !prev);
+        } else {
+            console.log("No Moves Yet!!")
+        }   
+    }
 
     const updateMovesList = () => {        
-        DataService.displayMoves()
+        DataService.displayMoves(gameId)
             .then(res => {
                 //console.log(res.data)
                 setMoves(res.data);
@@ -90,6 +110,13 @@ const Board = (props) => {
     const unselect = () => {
         setIsMove(false);        
     }
+    const changeTurn = (white = false) => {
+        if (white){
+            setIsWhite(true)
+        } else {
+            setIsWhite((prev) => !prev);
+        }        
+    }
 
     function toggleModal(message){
         setErrorMessage(message);
@@ -101,7 +128,7 @@ const Board = (props) => {
     }
 
     const selectPiece = e => {    
-        console.log(e.currentTarget) 
+        //console.log(e.currentTarget) 
         //console.log("Selecting piece ", e.currentTarget.id)        
         let multiplier = parseInt(e.currentTarget.id / 10);
         let count = e.currentTarget.id - multiplier * 2 ;
@@ -117,7 +144,7 @@ const Board = (props) => {
     }
 
     const selectMove = e => {       
-        console.log("Moving to ", e.currentTarget.id);        
+        //console.log("Moving to ", e.currentTarget.id);        
         let end = parseInt(e.currentTarget.id); 
         if (end === start){
             setIsMove(false);            
@@ -130,7 +157,7 @@ const Board = (props) => {
         }
         setIsMove(false);     
         console.log(move);
-        DataService.makeMove(move)
+        DataService.makeMove(move, gameId)
             .then(res => {
                 //console.log(res.data);
                 setIsWhite((prev) => !prev);                
@@ -141,8 +168,7 @@ const Board = (props) => {
             })
             .catch(err => {                
                 console.log(err.response.data)
-                toggleModal(err.response.data.errMessage)
-                //window.alert(err.response.data.errMessage)                
+                toggleModal(err.response.data.errMessage)              
             })
     }
     const specialMove = () => {
@@ -154,7 +180,7 @@ const Board = (props) => {
         }
         setIsMove(false);
         console.log(move);
-        DataService.makeMove(move)
+        DataService.makeMove(move, gameId)
             .then(res => {
                 setIsWhite((prev) => !prev);
                 props.setTheBoard(res.data);
@@ -176,7 +202,7 @@ const Board = (props) => {
             playerName 
         }
         console.log(endRequest)
-        DataService.endGame(endRequest)
+        DataService.endGame(endRequest, gameId)
             .then(res => {
                 console.log(res.data)
                 setStatus(res.data)
@@ -189,7 +215,7 @@ const Board = (props) => {
     }
     const generateHeaders = vertical => {
         let newHeader = [];
-        const rows = "abcdefgh"       
+        const rows = "ABCDEFGH";       
         if (vertical){
             for (let i =0; i< 8; i++){
                 newHeader.push(<div key={i} className="vsquare">{i + 1}</div>);
@@ -204,19 +230,19 @@ const Board = (props) => {
     
     return ( 
         <div id="main">  
-            <Details status={status} isMove={isMove} unselect={unselect} specialMove={specialMove} endTheGame={endTheGame} setTheBoard={props.setTheBoard} />                                
+            <Details status={status} isMove={isMove} unselect={unselect} specialMove={specialMove} endTheGame={endTheGame} setTheBoard={props.setTheBoard} undo={undo} changeTurn={changeTurn} gameId={gameId} />                                
             <div id="flexHolder">                
                 <div id="totalBoard">
                     <div id="vtag">{generateHeaders(true)}</div>
                     <div id="board">
-                        <Modal isOpen={showModal} id="model">
+                        <Modal isOpen={showModal} id="model" ariaHideApp={false}>
                             <h1 id="error">{errorMessage}</h1> 
                             <button id="button" onClick={() => setShowModal(false)}>Okay</button>
                         </Modal>
                         {Column()}
                     </div>                                                                       
                 </div>
-                <MovesList moves={moves} updateMovesList={updateMovesList} />             
+                <MovesList moves={moves} updateMovesList={updateMovesList} toggleMove={toggleMove} showMoves={showMoves} />             
             </div>
             <div id="htag">{generateHeaders(false)}</div>  
         </div>

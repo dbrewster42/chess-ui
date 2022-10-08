@@ -2,7 +2,9 @@
     margin-left: 20px;
     margin-right: 20px;
 }
-
+#welcome {
+    background-color: rgb(148, 147, 147);
+}
 #body {
     display: flex;
 }
@@ -13,17 +15,24 @@
 }
 #right {
     width: 45%;
+    margin: 1%;
     display: inline-block;
+}
+#right .blues {
+    margin-left: 240px;
 }
 
 h1 {
     text-align: center;
 }
 p {
-    margin-left: 75x;
+    margin-left: 40px;
+    width: 90%;
+    margin-top: 1%;
 }
 .blues {   
-    margin-left: 180px;
+    /* text-align: center; */
+    margin-left: 29%;
     color: blue;
 }
 .start {   
@@ -35,4 +44,37 @@ p {
 @keyframes starter {
     from {color: red;}
     to {color: green;}
+}
+
+.image{
+    width: 55%;
+    /* height: 270px; */
+    display: inline-block;
+}
+.im2 {
+    width: 98%;
+    /* margin-left: 5%; */
+    margin-top: 1%;
+}
+#lean {
+    width: 45%;
+    display: inline-block;
+}
+.blue {   
+    margin-left: 25%;
+    color: blue;
+}
+
+form {
+    color: rgb(94, 176, 204);
+    width: 300px;
+    height: 100px;
+    border: 1px solid black;
+    margin: auto;
+    text-align: center;
+    background-color: black;
+}
+span {
+    font-weight: 700;
+    margin-left: 3%;
 }

@@ -7,25 +7,30 @@
     justify-content: center;
     margin: 0px;
 }
+.title {
+    position: absolute;
+    color: white;
+    margin-top: 20px;
+    font-weight: 800;
+}
+
 .imgs {
     height: 100px;
     position: relative;
     width: 400px;
     margin: 0px 5px 0px 5px;
 }
-.title {
-      position: absolute;
-      color: white;
-      margin-top: 12px;
-      font-weight: 800;
-  }
-/* .r {
-    width: 360px;
-    margin: 0px 10px 0px 10px;
-} */
 .imgs2 {
     height: 100px;
     position: relative;
     width: 360px;
     margin: 0px 15px 0px 10px;
+}
+@media screen and (max-width: 1100px){
+    .imgs{
+        width: 22%;
+    }
+    .imgs2 {
+        width: 22%;
+    }
 }

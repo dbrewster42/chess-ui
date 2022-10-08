@@ -13,7 +13,7 @@ const Header = () => {
             <img className="imgs2" src={pic4} alt="pic" />
             <img className="imgs2" src={pic3} alt="pic" />
             
-            <h1 className="title">Mr Magoo's Master's Chess</h1>
+            <h1 className="title">Mr Magoo's Master Chess</h1>
         </div>
      );
 }

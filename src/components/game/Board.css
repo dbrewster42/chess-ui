@@ -2,9 +2,8 @@
     margin: 0px;
 }
 #main {
-    /* display: flex;
-    flex-direction: column; */
-    background-color: #324b73;
+    /* background-color: #324b73; */
+    background-color: #253146;
     margin: 0px;
     padding: 3px;
     height: 1020px;
@@ -30,13 +29,14 @@
     background-color: #8f4306;
 }
 .g:hover {
-    background-color: limegreen;
+    /* background-color: rgb(65, 65, 236); */
+    background-color: rgb(52, 115, 136);
 }
 .y {    
     background-color: burlywood;
 }
 .y:hover {
-    background-color: limegreen;
+    background-color: rgb(52, 115, 136);
 }
 .icons {    
     height: 90px;
@@ -61,7 +61,6 @@
     height: 816px;
     margin: 0px;
     margin-bottom: 1%;
-    /* display: inline-block; */
 }
 #htag {    
     width: 800px;
@@ -76,9 +75,7 @@
     display: inline-block;
     flex-direction: column;
     width: 800px;
-    /* //margin-left: 5%; */
-    height: 816px;
-    /* margin-left: 25%;    */
+    height: 817px;
 }
 #totalBoard {
     display: inline-flex;
@@ -103,4 +100,17 @@
     width: 70px;
     margin-left: 43%;
     margin-top: 20%;
+}
+@media screen and (max-width: 1100px){
+    #main {
+        height: 1300px;
+    }
+    #flexHolder {
+        display: block;
+        width: 850px;
+        height: 1076px;
+    }
+    #htag {
+        position: relative;
+    }
 }

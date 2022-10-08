@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import "./Board.css"
 
+// const Square = React.memo(props => {if (squareB === "squares b"){
+//     setSquareB(props.squareStyle);}}, (prevProps, nextProps) => prevProps.isMove === nextProps.isMove); {
 const Square = props => {
     let [ squareB, setSquareB ] = useState(props.squareStyle);
     if (!props.isMove && squareB === "squares b"){
