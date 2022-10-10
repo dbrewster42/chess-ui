@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import GameForm from "./GameForm"
 import PlayerForm from "./PlayerForm"
 import "./Welcome.css"
 import pic from "../header/4.jpg"
@@ -6,7 +7,7 @@ import pic2 from "../header/2.jpg"
 
 const Welcome = props => {
     //console.log("Welcome to the ", props)
-    const [showsForm, setShowsForm] = useState(false);
+    const [showsForm, setShowsForm] = useState(true);
 
     const toggleForm = e => {
         setShowsForm((prevShows) => !prevShows);
@@ -17,9 +18,9 @@ const Welcome = props => {
             {/* <Link to="/game"><h1 className="start">Click Here to Begin</h1></Link> */}
             <h1 className="start" onClick={toggleForm}>{">>>>>>>>>"} Start A Game {"<<<<<<<<<<"} </h1>
             {showsForm ? 
-            <PlayerForm setTheBoard={props.setTheBoard} toggleUndo={props.toggleUndo} />
+                <PlayerForm />
             : 
-            <i></i>
+                <GameForm setTheBoard={props.setTheBoard}  />
             }
 
 

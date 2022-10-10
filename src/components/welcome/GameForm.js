@@ -40,9 +40,9 @@ const GameForm = props => {
 
     return ( 
         <form onSubmit={startLocalGame}>
-            Play a local game with a friend<br></br>
-            <input type="text" name="user1" onChange={handleUser1} value={user1} /><br></br>
-            <input type="text" name="user2" onChange={handleUser2} value={user2} /><br></br>
+            Play a local game with a friend<br /><br />
+            White <input type="text" name="user1" onChange={handleUser1} value={user1} /><br />
+            Black  <input type="text" name="user2" onChange={handleUser2} value={user2} /><br /><br />
             <input type="submit" value="Start Local Game" />
         </form>
      );

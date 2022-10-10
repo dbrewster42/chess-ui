@@ -50,11 +50,12 @@ const PlayerForm = props => {
 
     return ( 
         <form onSubmit={makePlayer}>
-            Please Enter Your Name and a Valid Email <br></br>
-            <input type="text" name="name" onChange={handleName} value={name} /><br></br>
-            <input type="text" name="email" onChange={handleEmail} value={email} /><br></br>
+            Please Enter Your Name and a Valid Email To Create a New Account<br /><br />
+            name  <input type="text" name="name" onChange={handleName} value={name} /><br />
+            email <input type="text" name="email" onChange={handleEmail} value={email} /><br /><br />
             <input type="submit" value="Submit" />
         </form>
+        
      );
 }
  

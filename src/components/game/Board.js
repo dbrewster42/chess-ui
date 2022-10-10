@@ -70,7 +70,7 @@ const Board = (props) => {
     function Row(i){
         const newRow = [];
         let count = i * 8;  
-        for (let j = 0; j<8; j++){ 
+        for (let j = 0; j < 8; j++){ 
             let image = '';
             let thisPiece =  props.data[count].name;
             let squareStyle = "squares y"
