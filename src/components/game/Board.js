@@ -69,25 +69,22 @@ const Board = (props) => {
 
     function Row(i){
         const newRow = [];
-        let count = i * 8;  
-        for (let j = 0; j < 8; j++){ 
-            let image = '';
-            let thisPiece =  props.data[count].name;
+        let count = i * 10 + 1;  
+        console.log("getting data for pieces", props.data)
+        for (let j = 1; j < 9; j++){ 
             let squareStyle = "squares y"
-            if (thisPiece != null){
-                image = images[thisPiece];
-            }
             if ((i + j) % 2 === 1){
                 squareStyle = "squares g"
-            }        
+            }   
+            let image = null;
+            if (props.data.pieces.has(count)){
+                // image = props.data.pieces.get(count);
+                image = images[props.data.pieces.get(count)];
+            }     
             newRow.push(
                 <Square 
                     key={count}
-                    i={i} 
-                    j={j} 
                     squareStyle={squareStyle}
-                    count={count} 
-                    thisPiece={thisPiece}
                     image={image}
                     isMove={isMove} 
                     selectPiece={selectPiece}
@@ -101,7 +98,7 @@ const Board = (props) => {
 
     function Column(){        
         const Board = []        
-        for (let i = 0; i<8; i++){
+        for (let i = 1; i < 9; i++){
             Board.push(Row(i));            
         }
         return Board;
@@ -128,19 +125,34 @@ const Board = (props) => {
     }
 
     const selectPiece = e => {    
-        //console.log(e.currentTarget) 
-        //console.log("Selecting piece ", e.currentTarget.id)        
-        let multiplier = parseInt(e.currentTarget.id / 10);
-        let count = e.currentTarget.id - multiplier * 2 ;
-        //console.log(multiplier, "newCount", count)          
-        if ((props.data[count].name.startsWith("w") && isWhite) || (props.data[count].name.startsWith("b") && !isWhite)){
-            let numb = parseInt(e.currentTarget.id)               
-            setStart(numb);
-            setIsMove(true);
+        console.log("Selecting piece ", e.currentTarget.id)        
+        // let multiplier = parseInt(e.currentTarget.id / 10);
+        // let count = e.currentTarget.id - multiplier * 2 ;
+        // //console.log(multiplier, "newCount", count)          
+        props.data.pieces.has(count + j)
+        let count = e.currentTarget.id;
+        if ((props.data.pieces.get(count).startsWith("w") && isWhite) || (props.data.pieces.get(count).startsWith("b") && !isWhite)){
+            let num = parseInt(e.currentTarget.id)
+            DataService.selectPiece(num, gameId)
+            .then(res => {
+                console.log(res.data);
+
+                setStart(num);
+                setIsMove(true);
+                // props.setTheBoard(res.data);
+                highlightLegalMoves(res.data);
+            })
+            .catch(err => {                
+                console.log(err.response.data)
+                toggleModal(err.response.data.errMessage)              
+            })
         } else {
             console.log("That is not your piece!");
             toggleModal("That is not your piece!");                       
         }       
+    }
+    const highlightLegalMoves = e => {
+
     }
 
     const selectMove = e => {       
@@ -152,17 +164,17 @@ const Board = (props) => {
         }       
         const move = {
             start,
-            end,
-            isWhite
+            end
+            // isWhite
         }
         setIsMove(false);     
         console.log(move);
-        DataService.makeMove(move, gameId)
+        DataService.movePiece(move, gameId)
             .then(res => {
-                //console.log(res.data);
+                console.log(res.data);
                 setIsWhite((prev) => !prev);                
                 props.setTheBoard(res.data);
-                setStatus(res.data[64]);                
+                setStatus(res.data.status);                
                 updateMovesList();
                 setShowCheck(true);
             })
@@ -195,6 +207,7 @@ const Board = (props) => {
             })
 
     }
+
     const endTheGame = forfeit => {
         let playerName = status.playerName;
         let endRequest = {
@@ -213,17 +226,16 @@ const Board = (props) => {
                 toggleModal(err.response.data.errMessage) 
             })
     }
+
     const generateHeaders = vertical => {
         let newHeader = [];
-        const rows = "ABCDEFGH";       
-        if (vertical){
-            for (let i =0; i< 8; i++){
+        const columns = "ABCDEFGH";       
+        for (let i = 0; i < 8; i++){
+            if (vertical){
                 newHeader.push(<div key={i} className="vsquare">{i + 1}</div>);
-            }            
-        } else {
-            for (let i =0; i< 8; i++){
-                newHeader.push(<div key={i} className="hsquare">{rows[i]}</div>);
-            } 
+            } else {
+                newHeader.push(<div key={i} className="hsquare">{columns[i]}</div>);
+            }
         }   
         return newHeader;
     }
