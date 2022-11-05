@@ -8,6 +8,9 @@ class DataService {
     createUser(body) {
         return axios.post(`${url}/user`, body)
     }
+    login(body) {
+        return axios.get(`${url}/user`, body)
+    }
     startLocalGame(body) {
         return axios.post(`${url}`, body)
     }

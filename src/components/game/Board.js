@@ -19,7 +19,7 @@ const Board = (props) => {
     let [isMove, setIsMove] = useState(false);
     let [start, setStart] = useState(88);
     let [isWhite, setIsWhite] = useState(true);
-    let [status, setStatus] = useState(props.data[64]);
+    let [status, setStatus] = useState(props.data.status); //todo set initial values?
     let [errorMessage, setErrorMessage] = useState('');
     const [moves, setMoves] = useState([]);
     let [showModal, setShowModal] = useState(false);
@@ -56,16 +56,6 @@ const Board = (props) => {
         }   
     }
 
-    const updateMovesList = () => {        
-        DataService.displayMoves(gameId)
-            .then(res => {
-                //console.log(res.data)
-                setMoves(res.data);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }
 
     function Row(i){
         const newRow = [];
@@ -129,7 +119,7 @@ const Board = (props) => {
         // let multiplier = parseInt(e.currentTarget.id / 10);
         // let count = e.currentTarget.id - multiplier * 2 ;
         // //console.log(multiplier, "newCount", count)          
-        props.data.pieces.has(count + j)
+        // props.data.pieces.has(count + j)
         let count = e.currentTarget.id;
         if ((props.data.pieces.get(count).startsWith("w") && isWhite) || (props.data.pieces.get(count).startsWith("b") && !isWhite)){
             let num = parseInt(e.currentTarget.id)
@@ -175,8 +165,8 @@ const Board = (props) => {
                 setIsWhite((prev) => !prev);                
                 props.setTheBoard(res.data);
                 setStatus(res.data.status);                
-                updateMovesList();
                 setShowCheck(true);
+                setMoves(res.data.moves)
             })
             .catch(err => {                
                 console.log(err.response.data)
@@ -197,7 +187,6 @@ const Board = (props) => {
                 setIsWhite((prev) => !prev);
                 props.setTheBoard(res.data);
                 setStatus(res.data[64]);                
-                updateMovesList();
                 setShowCheck(true);
             })
             .catch(err => {                
@@ -254,7 +243,7 @@ const Board = (props) => {
                         {Column()}
                     </div>                                                                       
                 </div>
-                <MovesList moves={moves} updateMovesList={updateMovesList} toggleMove={toggleMove} showMoves={showMoves} />             
+                <MovesList moves={moves} toggleMove={toggleMove} showMoves={showMoves} />             
             </div>
             <div id="htag">{generateHeaders(false)}</div>  
         </div>
