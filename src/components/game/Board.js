@@ -16,6 +16,7 @@ function importAll(r) {
   }
 
 const Board = (props) => {  
+    let [squares, setSquares] = useState([])
     let [isMove, setIsMove] = useState(false);
     let [start, setStart] = useState(88);
     let [isWhite, setIsWhite] = useState(true);
@@ -56,7 +57,15 @@ const Board = (props) => {
         }   
     }
 
-
+    function Column(){        
+        const Board = []        
+        for (let i = 1; i < 9; i++){
+            Board.push(Row(i));            
+        }
+        console.log("board", Board)
+        setSquares(Board);
+        return Board;
+    }
     function Row(i){
         const newRow = [];
         let count = i * 10 + 1;  
@@ -67,6 +76,7 @@ const Board = (props) => {
                 squareStyle = "squares g"
             }   
             let image = null;
+            
             if (props.data.pieces.has(count)){
                 // image = props.data.pieces.get(count);
                 image = images[props.data.pieces.get(count)];
@@ -84,14 +94,6 @@ const Board = (props) => {
             count++;            
         }
         return <div className="rows" key={i}>{newRow}</div>;
-    }
-
-    function Column(){        
-        const Board = []        
-        for (let i = 1; i < 9; i++){
-            Board.push(Row(i));            
-        }
-        return Board;
     }
 
     const unselect = () => {
