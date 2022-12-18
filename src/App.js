@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import Header from "./components/header/Header"
 import Welcome from "./components/welcome/Welcome"
-import Board from "./components/game/Board"
+import Game from "./components/game/Game"
 
 function App() {
   const [data, setData] = useState([]);
@@ -40,7 +40,7 @@ function App() {
           <Welcome setTheBoard={setTheBoard} toggleUndo={toggleUndo} />
         </Route>
 
-        <Route exact path={`/game/:gameId`} render={() => <Board data={data} setTheBoard={setTheBoard} undo={undo} /> } />
+        <Route exact path={`/game/:gameId`} render={() => <Game data={data} setTheBoard={setTheBoard} undo={undo} /> } />
 
       </Switch>
     </Router>
@@ -49,3 +49,19 @@ function App() {
 }
 
 export default App;
+
+// return (
+//   <Router>
+//     <Header />      
+//     <Switch>   
+       
+//       <Route exact path="/">
+//         <Welcome />
+//       </Route>
+
+//       <Route exact path={`/game/:gameId`} render={() => <Game /> } />
+
+//     </Switch>
+//   </Router>
+  
+// );

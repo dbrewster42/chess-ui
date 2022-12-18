@@ -15,11 +15,14 @@ function importAll(r) {
     return images;
   }
 
-const Board = (props) => {  
+const Game = (props) => {  
     let [squares, setSquares] = useState([])
     let [isMove, setIsMove] = useState(false);
     let [start, setStart] = useState(88);
     let [isWhite, setIsWhite] = useState(true);
+    let [whitePlayer, setWhitePlayer] = useState(props.data.whitePlayerName);
+    let [blackPlayer, setBlackPlayer] = useState(props.data.blackPlayerName);
+    let [pieces, setPieces] = useState(props.data.pieces);
     let [status, setStatus] = useState(props.data.status); //todo set initial values?
     let [errorMessage, setErrorMessage] = useState('');
     const [moves, setMoves] = useState([]);
@@ -57,15 +60,7 @@ const Board = (props) => {
         }   
     }
 
-    function Column(){        
-        const Board = []        
-        for (let i = 1; i < 9; i++){
-            Board.push(Row(i));            
-        }
-        console.log("board", Board)
-        setSquares(Board);
-        return Board;
-    }
+
 
     function Row(i){
         const newRow = [];
@@ -243,7 +238,8 @@ const Board = (props) => {
                             <h1 id="error">{errorMessage}</h1> 
                             <button id="button" onClick={() => setShowModal(false)}>Okay</button>
                         </Modal>
-                        {squares}
+                        <Board pieces={pieces} possibleMoves={possibleMoves} isMove={isMove} selectPiece={selectPiece} selectMove={selectMove}  /> 
+                        {/* // {squares} */}
                     </div>                                                                       
                 </div>
                 <MovesList moves={moves} toggleMove={toggleMove} showMoves={showMoves} />             
@@ -254,4 +250,4 @@ const Board = (props) => {
      );
 }
  
-export default Board;
+export default Game;
