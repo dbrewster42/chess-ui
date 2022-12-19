@@ -2,41 +2,32 @@ import React, { useState } from 'react';
 import "./Board.css"
 import DataService from '../../service/DataService';
 import Details from '../Details';
-import MovesList from '../MovesList';
+import MovesList from './MovesList';
 import Square from './Square';
 import Modal from "react-modal";
 import { useParams } from "react-router-dom";
 
-function importAll(r) {
-    let images = {};
-    r.keys().forEach((item) => {        
-        images[item.replace("./", "")] = r(item);
-    });
-    return images;
-  }
 
-const Game = (props) => {  
-    let [squares, setSquares] = useState([])
-    let [isMove, setIsMove] = useState(false);
+const Game = (props) => { 
+    let [possibleMoves, setPossibleMoves] = useState() 
+    // let [isMove, setIsMove] = useState(false);
     let [start, setStart] = useState(88);
     let [isWhite, setIsWhite] = useState(true);
-    let [whitePlayer, setWhitePlayer] = useState(props.data.whitePlayerName);
-    let [blackPlayer, setBlackPlayer] = useState(props.data.blackPlayerName);
+    const [whitePlayer] = useState(props.data.whitePlayerName);
+    const [blackPlayer] = useState(props.data.blackPlayerName);
     let [pieces, setPieces] = useState(props.data.pieces);
-    let [status, setStatus] = useState(props.data.status); //todo set initial values?
+    let [status, setStatus] = useState(props.data.status);
     let [errorMessage, setErrorMessage] = useState('');
     const [moves, setMoves] = useState([]);
     let [showModal, setShowModal] = useState(false);
     let [showCheck, setShowCheck] = useState(true);    
-    const [undo] = useState(props.undo);
+    // const [undo] = useState(props.undo);
     //console.log(status);
     let [showMoves, setShowMoves] = useState(false);   
     let [autoToggle, setAutoToggle] = useState(true);
     const params = useParams();    
     const gameId = params.gameId;    
 
-    const images = importAll(require.context("../../../public/pics", false, /\.(pn?g)$/));
-    
     if (!status.active && showCheck){
         setShowCheck(false);
         toggleModal(status.message);
@@ -58,38 +49,6 @@ const Game = (props) => {
         } else {
             console.log("No Moves Yet!!")
         }   
-    }
-
-
-
-    function Row(i){
-        const newRow = [];
-        let count = i * 10 + 1;  
-        console.log("getting data for pieces", props.data)
-        for (let j = 1; j < 9; j++){ 
-            let squareStyle = "squares y"
-            if ((i + j) % 2 === 1){
-                squareStyle = "squares g"
-            }   
-            let image = null;
-            
-            if (props.data.pieces.has(count)){
-                // image = props.data.pieces.get(count);
-                image = images[props.data.pieces.get(count)];
-            }     
-            newRow.push(
-                <Square 
-                    key={count}
-                    squareStyle={squareStyle}
-                    image={image}
-                    isMove={isMove} 
-                    selectPiece={selectPiece}
-                    selectMove={selectMove} 
-                />
-            )            
-            count++;            
-        }
-        return <div className="rows" key={i}>{newRow}</div>;
     }
 
     const unselect = () => {
@@ -128,7 +87,7 @@ const Game = (props) => {
                 setStart(num);
                 setIsMove(true);
                 // props.setTheBoard(res.data);
-                highlightLegalMoves(res.data);
+                setPossibleMoves(res.data);
             })
             .catch(err => {                
                 console.log(err.response.data)
@@ -138,9 +97,6 @@ const Game = (props) => {
             console.log("That is not your piece!");
             toggleModal("That is not your piece!");                       
         }       
-    }
-    const highlightLegalMoves = e => {
-
     }
 
     const selectMove = e => {       
@@ -171,30 +127,7 @@ const Game = (props) => {
                 toggleModal(err.response.data.errMessage)              
             })
     }
-    const specialMove = () => {
-        let end = 999;
-        const move = {
-            start,
-            end,
-            isWhite
-        }
-        setIsMove(false);
-        console.log(move);
-        DataService.makeMove(move, gameId)
-            .then(res => {
-                setIsWhite((prev) => !prev);
-                props.setTheBoard(res.data);
-                setStatus(res.data[64]);                
-                setShowCheck(true);
-            })
-            .catch(err => {                
-                console.log(err.response.data);
-                //window.alert(err.response.data.errMessage) 
-                toggleModal(err.response.data.errMessage);      
-            })
-
-    }
-
+  
     const endTheGame = forfeit => {
         let playerName = status.playerName;
         let endRequest = {

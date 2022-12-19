@@ -1,3 +1,20 @@
+    const movePiece = move => {       
+        DataService.movePiece(move, gameId)
+            .then(res => {
+                console.log(res.data);
+                setIsWhite((prev) => !prev);                
+                props.setTheBoard(res.data);
+                setStatus(res.data.status);                
+                setShowCheck(true);
+                setMoves(res.data.moves)
+            })
+            .catch(err => {                
+                console.log(err.response.data)
+                toggleModal(err.response.data.errMessage)              
+            })
+    }
+
+
     // function getClassName(i, j){
     //     console.log(i, j)
     //     //console.log(e.currentTarget)
