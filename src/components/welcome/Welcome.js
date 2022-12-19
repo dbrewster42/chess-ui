@@ -18,7 +18,7 @@ const Welcome = props => {
             {/* <Link to="/game"><h1 className="start">Click Here to Begin</h1></Link> */}
             <h1 className="start" onClick={toggleForm}>{">>>>>>>>>"} Start A Game {"<<<<<<<<<<"} </h1>
             {showsForm ? 
-                <PlayerForm />
+                <PlayerForm setTheBoard={props.setTheBoard} />
             : 
                 <GameForm setTheBoard={props.setTheBoard}  />
             }

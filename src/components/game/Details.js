@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import "../App.css"
-import DataService from '../service/DataService';
+import "../../App.css"
+import DataService from '../../service/DataService';
 import { useHistory } from 'react-router-dom';
 
 const Details = props => {
@@ -75,7 +75,7 @@ const Details = props => {
             <button className="detailButtons" onClick={props.unselect}>Count Pieces</button>         */}                       
             {props.status.active &&
             <div>                
-                {props.isMove ? <button className="detailButtons" onClick={props.specialMove}>Special Move</button> : <button className="detailButtons" onClick={() => props.endTheGame(true)}>Forfeit</button> }
+                {/* {props.isMove ? <button className="detailButtons" onClick={props.specialMove}>Special Move</button> : <button className="detailButtons" onClick={() => props.endTheGame(true)}>Forfeit</button> } */}
                 {props.isMove ? <button className="detailButtons" onClick={props.unselect}>Unselect Piece</button> : <button className="detailButtons" onClick={() => props.endTheGame(false)}>Draw</button> } 
                 {props.isMove ? <button className="detailButtons" onClick={props.toggleMove}>Toggle Sidebar</button> : props.undo && <button className="detailButtons" onClick={() => undo()}>Undo</button> }                
                 {props.status.check && <h1 className="check">You must move out of check!</h1>}                

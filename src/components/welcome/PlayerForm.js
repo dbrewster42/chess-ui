@@ -70,7 +70,7 @@ const PlayerForm = props => {
         e.preventDefault(); 
         console.log(e.target);
         const body = {                
-            user : name, 
+            user1 : name, 
             user2 : name2
         }
        
@@ -106,7 +106,7 @@ const PlayerForm = props => {
                 black name  <input type="text" name="name2" onChange={handleName2} value={name2} /><br />
                 <input type="submit" value="Submit" />
             </form>
-            <Submit>Find a Game</Submit>
+            {/* <Submit>Find a Game</Submit> */}
         </div>
 
         

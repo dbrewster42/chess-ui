@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import "./Board.css"
 import DataService from '../../service/DataService';
-import Details from '../Details';
+import Details from './Details';
 import MovesList from './MovesList';
-import Square from './Square';
+import Board from './Board';
 import Modal from "react-modal";
 import { useParams } from "react-router-dom";
 
 
 const Game = (props) => { 
     let [possibleMoves, setPossibleMoves] = useState() 
-    // let [isMove, setIsMove] = useState(false);
+    let [isMove, setIsMove] = useState(false);
     let [start, setStart] = useState(88);
     let [isWhite, setIsWhite] = useState(true);
     const [whitePlayer] = useState(props.data.whitePlayerName);
@@ -162,7 +162,7 @@ const Game = (props) => {
     
     return ( 
         <div id="main">  
-            <Details status={status} isMove={isMove} unselect={unselect} specialMove={specialMove} endTheGame={endTheGame} setTheBoard={props.setTheBoard} undo={undo} changeTurn={changeTurn} gameId={gameId} />                                
+            <Details status={status} isMove={isMove} unselect={unselect} endTheGame={endTheGame} setTheBoard={props.setTheBoard} changeTurn={changeTurn} gameId={gameId} />                                
             <div id="flexHolder">                
                 <div id="totalBoard">
                     <div id="vtag">{generateHeaders(true)}</div>

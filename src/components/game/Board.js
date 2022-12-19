@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./Board.css"
 import Square from './Square';
 
@@ -11,12 +11,11 @@ function importAll(r) {
   }
 
 const Board = (props) => {  
-    // let [pieces] = useState(props.pieces)
-    // let [possibleMoves] = useState(props.possibleMoves)
-
     let [squares, setSquares] = useState(Column());
-
     const images = importAll(require.context("../../../public/pics", false, /\.(pn?g)$/));
+
+    console.log("iamges", images)
+
     
     useEffect(() => {
         console.log("highlighting moves")
@@ -35,7 +34,7 @@ const Board = (props) => {
                 />
         }
         setSquares(board)
-      }, [props.possibleMoves]);
+      }, props.possibleMoves);
 
     function Column(){        
         const Board = []        
@@ -49,9 +48,12 @@ const Board = (props) => {
     }
 
     function Row(i){
+        let images2 = importAll(require.context("../../../public/pics", false, /\.(pn?g)$/));
+        console.log("iamges", images2)
         const newRow = [];
         let count = i * 10 + 1;  
         console.log("getting data for pieces", props.pieces)
+        let thesePieces = new Map(Object.entries(props.pieces));
         for (let j = 1; j < 9; j++){ 
             let squareStyle = "squares y"
             if ((i + j) % 2 === 1){
@@ -59,9 +61,9 @@ const Board = (props) => {
             } 
 
             let image = null;
-            if (props.pieces.has(count)){
+            if (thesePieces.has(count + "")){
                 // image = props.data.pieces.get(count);
-                image = images[props.pieces.get(count)];
+                image = images2[thesePieces.get(count + "")];
             }
 
             newRow.push(

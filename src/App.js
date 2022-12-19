@@ -28,7 +28,7 @@ function App() {
 
   const setTheBoard = data => {
     //console.log("app", data);
-    setData([...data]);    
+    setData(data);    
   }
 
   return (
