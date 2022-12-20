@@ -9,14 +9,14 @@ import { useParams } from "react-router-dom";
 
 
 const Game = (props) => { 
-    let [possibleMoves, setPossibleMoves] = useState() 
+    let [possibleMoves, setPossibleMoves] = useState([]) 
     let [isMove, setIsMove] = useState(false);
     let [start, setStart] = useState(88);
     let [isWhite, setIsWhite] = useState(true);
-    const [whitePlayer] = useState(props.data.whitePlayerName);
-    const [blackPlayer] = useState(props.data.blackPlayerName);
-    let [pieces, setPieces] = useState(props.data.pieces);
-    let [status, setStatus] = useState(props.data.status);
+    // const [whitePlayer] = useState(props.data.whitePlayerName);
+    // const [blackPlayer] = useState(props.data.blackPlayerName);
+    // let [pieces, setPieces] = useState(props.data.pieces);
+    let [status, setStatus] = useState(props.status);
     let [errorMessage, setErrorMessage] = useState('');
     const [moves, setMoves] = useState([]);
     let [showModal, setShowModal] = useState(false);
@@ -75,10 +75,9 @@ const Game = (props) => {
         console.log("Selecting piece ", e.currentTarget.id)        
         // let multiplier = parseInt(e.currentTarget.id / 10);
         // let count = e.currentTarget.id - multiplier * 2 ;
-        // //console.log(multiplier, "newCount", count)          
-        // props.data.pieces.has(count + j)
         let count = e.currentTarget.id;
-        if ((props.data.pieces.get(count).startsWith("w") && isWhite) || (props.data.pieces.get(count).startsWith("b") && !isWhite)){
+        console.log("count", count)          
+        if ((props.pieces.get(count).startsWith("w") && isWhite) || (props.pieces.get(count).startsWith("b") && !isWhite)){
             let num = parseInt(e.currentTarget.id)
             DataService.selectPiece(num, gameId)
             .then(res => {
@@ -171,7 +170,7 @@ const Game = (props) => {
                             <h1 id="error">{errorMessage}</h1> 
                             <button id="button" onClick={() => setShowModal(false)}>Okay</button>
                         </Modal>
-                        <Board pieces={pieces} possibleMoves={possibleMoves} isMove={isMove} selectPiece={selectPiece} selectMove={selectMove}  /> 
+                        <Board pieces={props.pieces} possibleMoves={possibleMoves} isMove={isMove} selectPiece={selectPiece} selectMove={selectMove}  /> 
                         {/* // {squares} */}
                     </div>                                                                       
                 </div>

@@ -11,6 +11,19 @@
 #flexHolder {
     display: flex;
 }
+#board {   
+    border: 2px solid royalblue;
+    display: inline-block;
+    flex-direction: column;
+    width: 800px;
+    height: 817px;
+}
+#totalBoard {
+    display: inline-flex;
+    margin-left: 4%;
+    width: 850px;
+    height: 816px;
+}
 .rows {
     display: flex;
     flex-direction: row;
@@ -70,19 +83,6 @@
     margin-left: 7.5%;
 }
 
-#board {   
-    border: 2px solid royalblue;
-    display: inline-block;
-    flex-direction: column;
-    width: 800px;
-    height: 817px;
-}
-#totalBoard {
-    display: inline-flex;
-    margin-left: 4%;
-    width: 850px;
-    height: 816px;
-}
 #model {
     background-color: wheat;
     margin: auto;

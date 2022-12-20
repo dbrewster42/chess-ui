@@ -4,6 +4,7 @@ import Square from './Square';
 
 function importAll(r) {
     let images = {};
+
     r.keys().forEach((item) => {        
         images[item.replace("./", "")] = r(item);
     });
@@ -37,33 +38,33 @@ const Board = (props) => {
       }, props.possibleMoves);
 
     function Column(){        
-        const Board = []        
-        for (let i = 1; i < 9; i++){
-            Board.push(Row(i));            
+        const board = []        
+        for (let i = 8; i > 0; i--){
+            board.push(Row(i));            
         }
-        console.log("board", Board)
-        setSquares(Board);
+        console.log("board", board)
+        // setSquares(board);
         // return squares;
-        return Board;
+        return board;
     }
 
     function Row(i){
         let images2 = importAll(require.context("../../../public/pics", false, /\.(pn?g)$/));
         console.log("iamges", images2)
         const newRow = [];
-        let count = i * 10 + 1;  
+        // let count = i * 10 + 1;  
         console.log("getting data for pieces", props.pieces)
-        let thesePieces = new Map(Object.entries(props.pieces));
         for (let j = 1; j < 9; j++){ 
             let squareStyle = "squares y"
             if ((i + j) % 2 === 1){
                 squareStyle = "squares g"
             } 
 
+            let count = j * 10 + i;
             let image = null;
-            if (thesePieces.has(count + "")){
+            if (props.pieces.has(count)){
                 // image = props.data.pieces.get(count);
-                image = images2[thesePieces.get(count + "")];
+                image = images2[props.pieces.get(count)];
             }
 
             newRow.push(
@@ -76,7 +77,7 @@ const Board = (props) => {
                     selectMove={props.selectMove} 
                 />
             )            
-            count++;            
+            // count++;            
         }
         return <div className="rows" key={i}>{newRow}</div>;
     }
@@ -84,9 +85,17 @@ const Board = (props) => {
     
     return ( 
 
-        {squares}
-
-    //    {Column()}
+        // {squares}
+        // {for (let j = 1; j < 9; j++){ 
+        //     let squareStyle = "squares y"
+        //     if ((i + j) % 2 === 1){
+        //         squareStyle = "squares g"
+        //     } 
+        // }
+        <div>
+            {Column()}
+        </div>
+       
         
      );
 }

@@ -10,7 +10,11 @@ import Welcome from "./components/welcome/Welcome"
 import Game from "./components/game/Game"
 
 function App() {
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
+  const [whitePlayer, setWhitePlayer] = useState();
+  const [blackPlayer, setBlackPlayer] = useState();
+  let [pieces, setPieces] = useState([]);
+  let [status, setStatus] = useState();
   const [undo, setUndo] = useState(false);
 
   // const showBoard = () => {
@@ -28,7 +32,11 @@ function App() {
 
   const setTheBoard = data => {
     //console.log("app", data);
-    setData(data);    
+    // setData(data);    
+    setPieces(new Map(Object.entries(data.pieces).map(([k, v]) => [+k, v])))
+    setStatus(data.status)
+    setWhitePlayer(data.whitePlayer)
+    setBlackPlayer(data.blackPlayer)
   }
 
   return (
@@ -40,7 +48,7 @@ function App() {
           <Welcome setTheBoard={setTheBoard} toggleUndo={toggleUndo} />
         </Route>
 
-        <Route exact path={`/game/:gameId`} render={() => <Game data={data} setTheBoard={setTheBoard} undo={undo} /> } />
+        <Route exact path={`/game/:gameId`} render={() => <Game pieces={pieces} status={status} whitePlayer={whitePlayer} blackPlayer={blackPlayer} setTheBoard={setTheBoard} undo={undo} /> } />
 
       </Switch>
     </Router>
