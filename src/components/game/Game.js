@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 
 
 const Game = (props) => { 
+    let [allMoves] = useState(props.allMoves);
     let [possibleMoves, setPossibleMoves] = useState([]) 
     let [isMove, setIsMove] = useState(false);
     let [start, setStart] = useState(88);
@@ -75,23 +76,16 @@ const Game = (props) => {
         console.log("Selecting piece ", e.currentTarget.id)        
         // let multiplier = parseInt(e.currentTarget.id / 10);
         // let count = e.currentTarget.id - multiplier * 2 ;
-        let count = e.currentTarget.id;
-        console.log("count", count)          
-        if ((props.pieces.get(count).startsWith("w") && isWhite) || (props.pieces.get(count).startsWith("b") && !isWhite)){
-            let num = parseInt(e.currentTarget.id)
-            DataService.selectPiece(num, gameId)
-            .then(res => {
-                console.log(res.data);
+        let square = e.currentTarget.id;
+        console.log("square", square)          
+        // if ((props.pieces.get(count).startsWith("w") && isWhite) || (props.pieces.get(count).startsWith("b") && !isWhite)){
+        console.log("allMoves", allMoves)          
 
-                setStart(num);
-                setIsMove(true);
-                // props.setTheBoard(res.data);
-                setPossibleMoves(res.data);
-            })
-            .catch(err => {                
-                console.log(err.response.data)
-                toggleModal(err.response.data.errMessage)              
-            })
+        if (allMoves.has(square)){
+            setStart(square);
+            setIsMove(true);
+            setPossibleMoves(allMoves.get(square).validMoves)
+            //todo set special moves?
         } else {
             console.log("That is not your piece!");
             toggleModal("That is not your piece!");                       
@@ -116,10 +110,14 @@ const Game = (props) => {
             .then(res => {
                 console.log(res.data);
                 setIsWhite((prev) => !prev);                
-                props.setTheBoard(res.data);
-                setStatus(res.data.status);                
+                // props.setTheBoard(res.data);
+                props.updateTheBoard(res.data)
+                // setPieces(new Map(Object.entries(res.data.pieces).map(([k, v]) => [+k, v])))
+                // setStatus(res.data.status);                
                 setShowCheck(true);
-                setMoves(res.data.moves)
+                setMoves(res.data.moves);
+                // setAllMoves(res.data.allMoves);
+                // setAllMoves(new Map(Object.entries(res.data.allMoves)));
             })
             .catch(err => {                
                 console.log(err.response.data)
@@ -127,14 +125,8 @@ const Game = (props) => {
             })
     }
   
-    const endTheGame = forfeit => {
-        let playerName = status.playerName;
-        let endRequest = {
-            forfeit,
-            playerName 
-        }
-        console.log(endRequest)
-        DataService.endGame(endRequest, gameId)
+    const forfeit = forfeit => {
+        DataService.forfeit(gameId)
             .then(res => {
                 console.log(res.data)
                 setStatus(res.data)
@@ -161,7 +153,7 @@ const Game = (props) => {
     
     return ( 
         <div id="main">  
-            <Details status={status} isMove={isMove} unselect={unselect} endTheGame={endTheGame} setTheBoard={props.setTheBoard} changeTurn={changeTurn} gameId={gameId} />                                
+            <Details status={status} isMove={isMove} unselect={unselect} endTheGame={forfeit} setTheBoard={props.setTheBoard} changeTurn={changeTurn} gameId={gameId} />                                
             <div id="flexHolder">                
                 <div id="totalBoard">
                     <div id="vtag">{generateHeaders(true)}</div>

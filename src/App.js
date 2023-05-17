@@ -13,8 +13,9 @@ function App() {
   // const [data, setData] = useState([]);
   const [whitePlayer, setWhitePlayer] = useState();
   const [blackPlayer, setBlackPlayer] = useState();
-  let [pieces, setPieces] = useState([]);
+  let [pieces, setPieces] = useState();
   let [status, setStatus] = useState();
+  let [allMoves, setAllMoves] = useState();
   const [undo, setUndo] = useState(false);
 
   // const showBoard = () => {
@@ -37,6 +38,14 @@ function App() {
     setStatus(data.status)
     setWhitePlayer(data.whitePlayer)
     setBlackPlayer(data.blackPlayer)
+    setAllMoves(new Map(Object.entries(data.allMoves)));
+  }
+  const updateTheBoard = data => {
+    //console.log("app", data);
+    // setData(data);    
+    setPieces(new Map(Object.entries(data.pieces).map(([k, v]) => [+k, v])))
+    setStatus(data.status)
+    setAllMoves(new Map(Object.entries(data.allMoves)));
   }
 
   return (
@@ -48,7 +57,7 @@ function App() {
           <Welcome setTheBoard={setTheBoard} toggleUndo={toggleUndo} />
         </Route>
 
-        <Route exact path={`/game/:gameId`} render={() => <Game pieces={pieces} status={status} whitePlayer={whitePlayer} blackPlayer={blackPlayer} setTheBoard={setTheBoard} undo={undo} /> } />
+        <Route exact path={`/game/:gameId`} render={() => <Game pieces={pieces} status={status} allMoves={allMoves} whitePlayer={whitePlayer} blackPlayer={blackPlayer} setTheBoard={setTheBoard} updateTheBoard={updateTheBoard} undo={undo} /> } />
 
       </Switch>
     </Router>

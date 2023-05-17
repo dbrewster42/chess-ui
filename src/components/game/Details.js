@@ -33,7 +33,7 @@ const Details = props => {
         DataService.undo(props.gameId)
         .then(res => {
             console.log(res);
-            props.setTheBoard(res.data);
+            props.setTheBoard(res.data); //todo remove
             props.changeTurn();
         })
         .catch(err => {

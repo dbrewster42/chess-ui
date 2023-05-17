@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 //const proxyurl = "https://cors-anywhere.herokuapp.com/";
-const url = 'http://localhost:8080/game';
+const url = 'http://localhost:8080';
 
 class DataService {    
 
@@ -12,42 +12,27 @@ class DataService {
         return axios.get(`${url}/user`, body)
     }
     startLocalGame(body) {
-        return axios.post(`${url}`, body)
+        return axios.post(`${url}/game`, body)
     }
-    selectPiece(body, id) {
-        return axios.get(`${url}/${id}`, body);
+    getAllMoves(body, id) {
+        return axios.get(`${url}/game/${id}`, body);
     }
     movePiece(body, id) {
-        return axios.post(`${url}/${id}`, body);
-    }
-    selectPromotion(body, id) {
-        return axios.post(`${url}/${id}/promotion`, body);
+        return axios.post(`${url}/game/${id}`, body);
     }
 
-
-
-    restartGame(){
-        return axios.post(`${url}/restart`);
+    restartLocalGame(body) {
+        return axios.post(`${url}/game/restart`)
     }
-
-    createPlayers(body){
-        return axios.post(`${url}/players`, body);
+    requestDraw(id) {
+        return axios.post(`${url}/game/${id}/draw`);
     }
-
-    makeMove(move, id){
-        return axios.post(`${url}/${id}`, move);
-    }
-
-    displayMoves(id){
-        return axios.get(`${url}/${id}/moves`);
-    }
-
-    endGame(endRequest, id){
-        return axios.post(`${url}/${id}/end`, endRequest);
+    forfeit(id) {
+        return axios.post(`${url}/game/${id}/forfeit`);
     }
 
     undo(id){
-        return axios.post(`${url}/${id}/undo`);
+        return axios.post(`${url}/game/${id}/undo`);
     }
    
 }

@@ -93,7 +93,16 @@ const Board = (props) => {
         //     } 
         // }
         <div>
-            {Column()}
+            {squares}
+            {/* <div className="rows" key={i}>{row1}</div>
+            <div className="rows" key={i}>{row2}</div>
+            <div className="rows" key={i}>{row3}</div>
+            <div className="rows" key={i}>{row4}</div>
+            <div className="rows" key={i}>{row5}</div>
+            <div className="rows" key={i}>{row6}</div>
+            <div className="rows" key={i}>{row7}</div>
+            <div className="rows" key={i}>{row8}</div> */}
+            {/* {Column()} */}
         </div>
        
         
