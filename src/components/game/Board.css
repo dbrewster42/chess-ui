@@ -41,6 +41,9 @@
 .g {    
     background-color: #8f4306;
 }
+.s {    
+    background-color: rgb(26, 33, 36);
+}
 .g:hover {
     /* background-color: rgb(65, 65, 236); */
     background-color: rgb(52, 115, 136);
@@ -59,12 +62,14 @@
     padding-top: 30px;
     padding-bottom: 30px;
     width: 40px;
+    color: red;
     font-size: x-large;
 } 
 .hsquare {
     width: 100px;
     height: 20px;
     text-emphasis: bold;
+    color: red;
     font-size: x-large;
 }
 #vtag {

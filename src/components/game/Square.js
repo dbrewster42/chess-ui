@@ -14,7 +14,7 @@ const Square = props => {
     }
 
     return ( 
-        <div id={props.key} className={squareB}  onClick={props.isMove ? props.selectMove : props.image !== null ? changeBackground : undefined  }>
+        <div id={props.id} className={squareB}  onClick={props.isMove ? props.selectMove : props.image !== null ? changeBackground : undefined  }>
             { (props.image != null) &&
                 <img src={props.image}
                     className="icons"

@@ -6,10 +6,17 @@ import MovesList from './MovesList';
 import Board from './Board';
 import Modal from "react-modal";
 import { useParams } from "react-router-dom";
+import defaultPieces from "../../data/default-pieces.json";
+import initialMoves from "../../data/initial-moves.json";
+
 
 
 const Game = (props) => { 
-    let [allMoves] = useState(props.allMoves);
+    // const params = useParams();    
+    const gameId = useParams().gameId;    
+    let [pieces, setPieces] = useState(new Map(Object.entries(defaultPieces).map(([k, v]) => [+k, v])));
+    let [status, setStatus] = useState({ active : true, check : false, isWhite : true });
+    let [allMoves, setAllMoves] = useState(new Map(Object.entries(initialMoves)));
     let [possibleMoves, setPossibleMoves] = useState([]) 
     let [isMove, setIsMove] = useState(false);
     let [start, setStart] = useState(88);
@@ -17,7 +24,6 @@ const Game = (props) => {
     // const [whitePlayer] = useState(props.data.whitePlayerName);
     // const [blackPlayer] = useState(props.data.blackPlayerName);
     // let [pieces, setPieces] = useState(props.data.pieces);
-    let [status, setStatus] = useState(props.status);
     let [errorMessage, setErrorMessage] = useState('');
     const [moves, setMoves] = useState([]);
     let [showModal, setShowModal] = useState(false);
@@ -26,8 +32,7 @@ const Game = (props) => {
     //console.log(status);
     let [showMoves, setShowMoves] = useState(false);   
     let [autoToggle, setAutoToggle] = useState(true);
-    const params = useParams();    
-    const gameId = params.gameId;    
+
 
     if (!status.active && showCheck){
         setShowCheck(false);
@@ -72,8 +77,16 @@ const Game = (props) => {
         
     }
 
+    const updateTheBoard = data => {
+        console.log("app", data);
+        // setData(data);    
+        setPieces(new Map(Object.entries(data.pieces).map(([k, v]) => [+k, v])))
+        setStatus(data.status)
+        setAllMoves(new Map(Object.entries(data.allMoves)));
+    }
+
     const selectPiece = e => {    
-        console.log("Selecting piece ", e.currentTarget.id)        
+        console.log("Selecting piece ", e, e.currentTarget.id)        
         // let multiplier = parseInt(e.currentTarget.id / 10);
         // let count = e.currentTarget.id - multiplier * 2 ;
         let square = e.currentTarget.id;
@@ -84,6 +97,7 @@ const Game = (props) => {
         if (allMoves.has(square)){
             setStart(square);
             setIsMove(true);
+            console.log("selected", start, "which can move to", allMoves.get(square))
             setPossibleMoves(allMoves.get(square).validMoves)
             //todo set special moves?
         } else {
@@ -93,7 +107,7 @@ const Game = (props) => {
     }
 
     const selectMove = e => {       
-        //console.log("Moving to ", e.currentTarget.id);        
+        console.log("Moving to ", e.currentTarget.id);        
         let end = parseInt(e.currentTarget.id); 
         if (end === start){
             setIsMove(false);            
@@ -111,7 +125,7 @@ const Game = (props) => {
                 console.log(res.data);
                 setIsWhite((prev) => !prev);                
                 // props.setTheBoard(res.data);
-                props.updateTheBoard(res.data)
+                updateTheBoard(res.data)
                 // setPieces(new Map(Object.entries(res.data.pieces).map(([k, v]) => [+k, v])))
                 // setStatus(res.data.status);                
                 setShowCheck(true);
@@ -162,7 +176,7 @@ const Game = (props) => {
                             <h1 id="error">{errorMessage}</h1> 
                             <button id="button" onClick={() => setShowModal(false)}>Okay</button>
                         </Modal>
-                        <Board pieces={props.pieces} possibleMoves={possibleMoves} isMove={isMove} selectPiece={selectPiece} selectMove={selectMove}  /> 
+                        <Board pieces={pieces} possibleMoves={possibleMoves} isMove={isMove} selectPiece={selectPiece} selectMove={selectMove}  /> 
                         {/* // {squares} */}
                     </div>                                                                       
                 </div>

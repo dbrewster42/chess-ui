@@ -13,63 +13,65 @@ function importAll(r) {
 
 const Board = (props) => {  
     let [squares, setSquares] = useState(Column());
-    const images = importAll(require.context("../../../public/pics", false, /\.(pn?g)$/));
-
-    console.log("iamges", images)
+    // const images = importAll(require.context("../../../public/pics", false, /\.(pn?g)$/));
 
     
-    useEffect(() => {
-        console.log("highlighting moves")
-        let board = squares;
-        for (let square of props.possibleMoves){
-            let selectedSquare = board[square / 10][square % 10]
-            console.log(selectedSquare.key, " ::: ", square)
-            board[square / 10][square % 10] =  
-                <Square 
-                    key={square}
-                    squareStyle={"squares s"}
-                    image={selectedSquare.image}
-                    isMove={props.isMove} 
-                    selectPiece={props.selectPiece}
-                    selectMove={props.selectMove} 
-                />
-        }
-        setSquares(board)
-      }, props.possibleMoves);
+    // useEffect(() => {
+    //     console.log("highlighting moves")
+    //     let board = squares;
+    //     for (let square of props.possibleMoves){
+    //         let selectedSquare = board[square / 10][square % 10]
+    //         console.log(selectedSquare.key, " ::: ", square)
+    //         board[square / 10][square % 10] =  
+    //             <Square 
+    //                 key={square}
+    //                 squareStyle={"squares s"}
+    //                 image={selectedSquare.image}
+    //                 isMove={props.isMove} 
+    //                 selectPiece={props.selectPiece}
+    //                 selectMove={props.selectMove} 
+    //             />
+    //     }
+    //     setSquares(board)
+    //   }, [props.possibleMoves]);
 
-    function Column(){        
+    function Column(){   
+        const images = importAll(require.context("../../../public/pics", false, /\.(pn?g)$/));     
         const board = []        
         for (let i = 8; i > 0; i--){
-            board.push(Row(i));            
+            board.push(Row(i, images));            
         }
-        console.log("board", board)
         // setSquares(board);
         // return squares;
         return board;
     }
 
-    function Row(i){
-        let images2 = importAll(require.context("../../../public/pics", false, /\.(pn?g)$/));
-        console.log("iamges", images2)
+    function Row(i, images){
         const newRow = [];
         // let count = i * 10 + 1;  
-        console.log("getting data for pieces", props.pieces)
+        // console.log("getting data for pieces", props.pieces)
         for (let j = 1; j < 9; j++){ 
             let squareStyle = "squares y"
             if ((i + j) % 2 === 1){
                 squareStyle = "squares g"
             } 
-
             let count = j * 10 + i;
+            if (props.possibleMoves.includes(count)){
+                console.log(count, "is a possible move")
+                squareStyle = "squares s"
+                console.log(squareStyle);
+            }
+
             let image = null;
             if (props.pieces.has(count)){
                 // image = props.data.pieces.get(count);
-                image = images2[props.pieces.get(count)];
+                image = images[props.pieces.get(count)];
             }
 
             newRow.push(
                 <Square 
                     key={count}
+                    id={count}
                     squareStyle={squareStyle}
                     image={image}
                     isMove={props.isMove} 
