@@ -20,7 +20,7 @@ const Game = (props) => {
     let [possibleMoves, setPossibleMoves] = useState([]) 
     let [isMove, setIsMove] = useState(false);
     let [start, setStart] = useState(88);
-    let [isWhite, setIsWhite] = useState(true);
+    // let [isWhite, setIsWhite] = useState(true);
     // const [whitePlayer] = useState(props.data.whitePlayerName);
     // const [blackPlayer] = useState(props.data.blackPlayerName);
     // let [pieces, setPieces] = useState(props.data.pieces);
@@ -58,15 +58,16 @@ const Game = (props) => {
     }
 
     const unselect = () => {
+        console.log("unselecting")
         setIsMove(false);        
     }
-    const changeTurn = (white = false) => {
-        if (white){
-            setIsWhite(true)
-        } else {
-            setIsWhite((prev) => !prev);
-        }        
-    }
+    // const changeTurn = (white = false) => {
+    //     if (white){
+    //         setIsWhite(true)
+    //     } else {
+    //         setIsWhite((prev) => !prev);
+    //     }        
+    // }
 
     function toggleModal(message){
         setErrorMessage(message);
@@ -97,7 +98,7 @@ const Game = (props) => {
         if (allMoves.has(square)){
             setStart(square);
             setIsMove(true);
-            console.log("selected", start, "which can move to", allMoves.get(square))
+            console.log("selected", start, "which can move to", allMoves.get(square), isMove)
             setPossibleMoves(allMoves.get(square).validMoves)
             //todo set special moves?
         } else {
@@ -123,7 +124,7 @@ const Game = (props) => {
         DataService.movePiece(move, gameId)
             .then(res => {
                 console.log(res.data);
-                setIsWhite((prev) => !prev);                
+                // setIsWhite((prev) => !prev);                
                 // props.setTheBoard(res.data);
                 updateTheBoard(res.data)
                 // setPieces(new Map(Object.entries(res.data.pieces).map(([k, v]) => [+k, v])))
@@ -167,7 +168,7 @@ const Game = (props) => {
     
     return ( 
         <div id="main">  
-            <Details status={status} isMove={isMove} unselect={unselect} endTheGame={forfeit} setTheBoard={props.setTheBoard} changeTurn={changeTurn} gameId={gameId} />                                
+            <Details status={status} isMove={isMove} unselect={unselect} endTheGame={forfeit} setTheBoard={props.setTheBoard} gameId={gameId} />                                
             <div id="flexHolder">                
                 <div id="totalBoard">
                     <div id="vtag">{generateHeaders(true)}</div>

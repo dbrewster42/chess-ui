@@ -50,6 +50,7 @@ const Board = (props) => {
         const newRow = [];
         // let count = i * 10 + 1;  
         // console.log("getting data for pieces", props.pieces)
+        console.log("isMove", props.isMove);
         for (let j = 1; j < 9; j++){ 
             let squareStyle = "squares y"
             if ((i + j) % 2 === 1){
@@ -59,7 +60,6 @@ const Board = (props) => {
             if (props.possibleMoves.includes(count)){
                 console.log(count, "is a possible move")
                 squareStyle = "squares s"
-                console.log(squareStyle);
             }
 
             let image = null;

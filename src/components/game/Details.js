@@ -34,7 +34,7 @@ const Details = props => {
         .then(res => {
             console.log(res);
             props.setTheBoard(res.data); //todo remove
-            props.changeTurn();
+            // props.changeTurn();
         })
         .catch(err => {
             console.log(err);
@@ -47,7 +47,7 @@ const Details = props => {
         .then(res => {
             console.log(res);
             props.setTheBoard(res.data);
-            props.changeTurn(true);
+            // props.changeTurn(true);
             let newId = res.data[64].id;
             history.push(`/game/${newId}`);
         })
