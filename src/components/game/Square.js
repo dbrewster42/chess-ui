@@ -5,7 +5,6 @@ import "./Board.css"
 const Square = props => {
     let [squareB, setSquareB] = useState(props.squareStyle);
     if (!props.isMove && squareB === "squares b"){
-        console.log(props)
         setSquareB(props.squareStyle);
     }
 

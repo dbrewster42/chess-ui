@@ -42,7 +42,9 @@
     background-color: #8f4306;
 }
 .s {    
-    background-color: rgb(26, 33, 36);
+    /* background-color: rgb(26, 33, 36); */
+    background-color: green;
+
 }
 .g:hover {
     /* background-color: rgb(65, 65, 236); */

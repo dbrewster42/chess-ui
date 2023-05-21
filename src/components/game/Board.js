@@ -12,7 +12,7 @@ function importAll(r) {
   }
 
 const Board = (props) => {  
-    let [squares, setSquares] = useState(Column());
+    // let [squares, setSquares] = useState(Column());
     // const images = importAll(require.context("../../../public/pics", false, /\.(pn?g)$/));
 
     
@@ -50,16 +50,18 @@ const Board = (props) => {
         const newRow = [];
         // let count = i * 10 + 1;  
         // console.log("getting data for pieces", props.pieces)
-        console.log("isMove", props.isMove);
         for (let j = 1; j < 9; j++){ 
-            let squareStyle = "squares y"
-            if ((i + j) % 2 === 1){
-                squareStyle = "squares g"
-            } 
+            let squareStyle;
             let count = j * 10 + i;
             if (props.possibleMoves.includes(count)){
                 console.log(count, "is a possible move")
                 squareStyle = "squares s"
+            } else {
+                if ((i + j) % 2 === 1){
+                    squareStyle = "squares g"
+                } else {
+                    squareStyle = "squares y"
+                }
             }
 
             let image = null;
@@ -86,25 +88,9 @@ const Board = (props) => {
 
     
     return ( 
-
-        // {squares}
-        // {for (let j = 1; j < 9; j++){ 
-        //     let squareStyle = "squares y"
-        //     if ((i + j) % 2 === 1){
-        //         squareStyle = "squares g"
-        //     } 
-        // }
         <div>
-            {squares}
-            {/* <div className="rows" key={i}>{row1}</div>
-            <div className="rows" key={i}>{row2}</div>
-            <div className="rows" key={i}>{row3}</div>
-            <div className="rows" key={i}>{row4}</div>
-            <div className="rows" key={i}>{row5}</div>
-            <div className="rows" key={i}>{row6}</div>
-            <div className="rows" key={i}>{row7}</div>
-            <div className="rows" key={i}>{row8}</div> */}
-            {/* {Column()} */}
+            {/* {squares} */}
+            {Column()}
         </div>
        
         
