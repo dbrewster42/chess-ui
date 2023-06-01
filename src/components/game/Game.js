@@ -16,7 +16,7 @@ const Game = (props) => {
     const gameId = useParams().gameId;    
     let [pieces, setPieces] = useState(new Map(Object.entries(defaultPieces).map(([k, v]) => [+k, v])));
     let [status, setStatus] = useState({ active : true, check : false, isWhite : true });
-    let [allMoves, setAllMoves] = useState(new Map(Object.entries(initialMoves)));
+    let [allMoves, setAllMoves] = useState(new Map(Object.entries(initialMoves).map(([k, v]) => [+k, v])));
     let [possibleMoves, setPossibleMoves] = useState([]) 
     let [isMove, setIsMove] = useState(false);
     let [start, setStart] = useState(88);
@@ -83,14 +83,15 @@ const Game = (props) => {
         // setData(data);    
         setPieces(new Map(Object.entries(data.pieces).map(([k, v]) => [+k, v])))
         setStatus(data.status)
-        setAllMoves(new Map(Object.entries(data.allMoves)));
+        setAllMoves(new Map(Object.entries(data.allMoves).map(([k, v]) => [+k, v])));
+        setMoves(data.moves);
     }
 
     const selectPiece = e => {    
         console.log("Selecting piece ", e, e.currentTarget.id)        
         // let multiplier = parseInt(e.currentTarget.id / 10);
         // let count = e.currentTarget.id - multiplier * 2 ;
-        let square = e.currentTarget.id;
+        let square = parseInt(e.currentTarget.id); 
         console.log("square", square)          
         // if ((props.pieces.get(count).startsWith("w") && isWhite) || (props.pieces.get(count).startsWith("b") && !isWhite)){
         console.log("allMoves", allMoves)          
@@ -103,21 +104,31 @@ const Game = (props) => {
             //todo set special moves?
         } else {
             console.log("That is not your piece!");
-            toggleModal("That is not your piece!");                       
+            toggleModal("That piece cannot be moved");                       
         }       
     }
 
     const selectMove = e => {       
-        console.log("Moving to ", e.currentTarget.id);        
+        console.log("Moving", start, "to", e.currentTarget.id);        
         let end = parseInt(e.currentTarget.id); 
         if (end === start){
             setIsMove(false);            
             return;
-        }       
+        }
+        let specialMove = null;
+        let promotionType = null;
+        if (possibleMoves.specialMoves.contains(end)) {
+            specialMove = possibleMoves.specialMoves.get(end)
+            console.log(specialMove)
+            if (specialMove == "Promotion") {
+                promotionType = getPromotionType();
+            }
+        }      
         const move = {
             start,
-            end
-            // isWhite
+            end,
+            specialMove,
+            promotionType
         }
         setIsMove(false);     
         console.log(move);
@@ -130,7 +141,6 @@ const Game = (props) => {
                 // setPieces(new Map(Object.entries(res.data.pieces).map(([k, v]) => [+k, v])))
                 // setStatus(res.data.status);                
                 setShowCheck(true);
-                setMoves(res.data.moves);
                 // setAllMoves(res.data.allMoves);
                 // setAllMoves(new Map(Object.entries(res.data.allMoves)));
             })
@@ -138,6 +148,9 @@ const Game = (props) => {
                 console.log(err.response.data)
                 toggleModal(err.response.data.errMessage)              
             })
+    }
+
+    const getPromotionType  = e => {   
     }
   
     const forfeit = forfeit => {
@@ -155,8 +168,8 @@ const Game = (props) => {
 
     const generateHeaders = vertical => {
         let newHeader = [];
-        const columns = "ABCDEFGH";       
-        for (let i = 0; i < 8; i++){
+        const columns = "HGFEDCBA";       
+        for (let i = 8; i > 1; i--){
             if (vertical){
                 newHeader.push(<div key={i} className="vsquare">{i + 1}</div>);
             } else {
