@@ -16,7 +16,7 @@ const Game = (props) => {
     const gameId = useParams().gameId;    
     let [pieces, setPieces] = useState(new Map(Object.entries(defaultPieces).map(([k, v]) => [+k, v])));
     let [status, setStatus] = useState({ active : true, check : false, isWhite : true });
-    let [allMoves, setAllMoves] = useState(new Map(Object.entries(initialMoves).map(([k, v]) => [+k, v])));
+    let [allMoves, setAllMoves] = useState(new Map(Object.entries(initialMoves)));
     let [possibleMoves, setPossibleMoves] = useState([]) 
     let [isMove, setIsMove] = useState(false);
     let [start, setStart] = useState(88);
@@ -83,7 +83,7 @@ const Game = (props) => {
         // setData(data);    
         setPieces(new Map(Object.entries(data.pieces).map(([k, v]) => [+k, v])))
         setStatus(data.status)
-        setAllMoves(new Map(Object.entries(data.allMoves).map(([k, v]) => [+k, v])));
+        setAllMoves(new Map(Object.entries(data.allMoves)));
         setMoves(data.moves);
     }
 
@@ -91,7 +91,7 @@ const Game = (props) => {
         console.log("Selecting piece ", e, e.currentTarget.id)        
         // let multiplier = parseInt(e.currentTarget.id / 10);
         // let count = e.currentTarget.id - multiplier * 2 ;
-        let square = parseInt(e.currentTarget.id); 
+        let square = e.currentTarget.id; 
         console.log("square", square)          
         // if ((props.pieces.get(count).startsWith("w") && isWhite) || (props.pieces.get(count).startsWith("b") && !isWhite)){
         console.log("allMoves", allMoves)          
@@ -99,7 +99,7 @@ const Game = (props) => {
         if (allMoves.has(square)){
             setStart(square);
             setIsMove(true);
-            console.log("selected", start, "which can move to", allMoves.get(square), isMove)
+            console.log("selected", square, "which can move to", allMoves.get(square), isMove)
             setPossibleMoves(allMoves.get(square).validMoves)
             //todo set special moves?
         } else {
@@ -110,20 +110,27 @@ const Game = (props) => {
 
     const selectMove = e => {       
         console.log("Moving", start, "to", e.currentTarget.id);        
-        let end = parseInt(e.currentTarget.id); 
+        let end = e.currentTarget.id; 
         if (end === start){
             setIsMove(false);            
             return;
         }
         let specialMove = null;
         let promotionType = null;
-        if (possibleMoves.specialMoves.contains(end)) {
-            specialMove = possibleMoves.specialMoves.get(end)
-            console.log(specialMove)
-            if (specialMove == "Promotion") {
-                promotionType = getPromotionType();
+
+        console.log("allPossibleMoves", allMoves.get(start))
+        if (allMoves.get(start).specialMoves != null) {
+            let specialMoves = new Map(Object.entries(allMoves.get(start).specialMoves));
+            console.log("special moves", specialMoves)
+            if (specialMoves.has(end)) {
+                specialMove = specialMoves.get(end)
+                console.log(specialMove)
+                if (specialMove == "Promotion") {
+                    promotionType = selectPromotionType();
+                }
             }
-        }      
+        }
+
         const move = {
             start,
             end,
@@ -131,7 +138,7 @@ const Game = (props) => {
             promotionType
         }
         setIsMove(false);     
-        console.log(move);
+        console.log("move", move);
         DataService.movePiece(move, gameId)
             .then(res => {
                 console.log(res.data);
@@ -150,7 +157,8 @@ const Game = (props) => {
             })
     }
 
-    const getPromotionType  = e => {   
+    const selectPromotionType  = e => {   
+        return "Queen";
     }
   
     const forfeit = forfeit => {
