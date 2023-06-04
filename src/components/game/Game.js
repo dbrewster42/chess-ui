@@ -20,33 +20,28 @@ const Game = (props) => {
     let [possibleMoves, setPossibleMoves] = useState([]) 
     let [isMove, setIsMove] = useState(false);
     let [start, setStart] = useState(88);
-    // let [isWhite, setIsWhite] = useState(true);
-    // const [whitePlayer] = useState(props.data.whitePlayerName);
-    // const [blackPlayer] = useState(props.data.blackPlayerName);
-    // let [pieces, setPieces] = useState(props.data.pieces);
     let [errorMessage, setErrorMessage] = useState('');
-    const [moves, setMoves] = useState([]);
+    const [moveMessages] = useState([]);
+    // let [moves, setMoves] = useState([]);
     let [showModal, setShowModal] = useState(false);
     let [showCheck, setShowCheck] = useState(true);    
-    // const [undo] = useState(props.undo);
-    //console.log(status);
     let [showMoves, setShowMoves] = useState(false);   
     let [autoToggle, setAutoToggle] = useState(true);
+    let [selectPromotion, setSelectPromotion] = useState(false);
+    let [promotion, setPromotion] = useState()
 
 
     if (!status.active && showCheck){
         setShowCheck(false);
-        toggleModal(status.message);
+        toggleModal(status.message); //todo
     } else if (status.check && showCheck){
         setShowCheck(false);
         toggleModal("CHECK!");
     }
    
-    if ((autoToggle) && moves.moves){
-        if (moves.moves.length === 4){
-            setShowMoves(true);
-            setAutoToggle(false)
-        } 
+    if (autoToggle && moves.length > 3){
+        setShowMoves(true);
+        setAutoToggle(false);
     } 
 
     const toggleMove = () => {
@@ -61,13 +56,6 @@ const Game = (props) => {
         console.log("unselecting")
         setIsMove(false);        
     }
-    // const changeTurn = (white = false) => {
-    //     if (white){
-    //         setIsWhite(true)
-    //     } else {
-    //         setIsWhite((prev) => !prev);
-    //     }        
-    // }
 
     function toggleModal(message){
         setErrorMessage(message);
@@ -75,22 +63,18 @@ const Game = (props) => {
         setTimeout(function(){
             setShowModal(false)
         }, (2500))
-        
     }
 
     const updateTheBoard = data => {
         console.log("app", data);
-        // setData(data);    
         setPieces(new Map(Object.entries(data.pieces).map(([k, v]) => [+k, v])))
         setStatus(data.status)
+        moveMessages.push(data.move)
         setAllMoves(new Map(Object.entries(data.allMoves)));
-        setMoves(data.moves);
+        // setMoves(data.moves);
     }
 
     const selectPiece = e => {    
-        console.log("Selecting piece ", e, e.currentTarget.id)        
-        // let multiplier = parseInt(e.currentTarget.id / 10);
-        // let count = e.currentTarget.id - multiplier * 2 ;
         let square = e.currentTarget.id; 
         console.log("square", square)          
         // if ((props.pieces.get(count).startsWith("w") && isWhite) || (props.pieces.get(count).startsWith("b") && !isWhite)){
@@ -101,7 +85,6 @@ const Game = (props) => {
             setIsMove(true);
             console.log("selected", square, "which can move to", allMoves.get(square), isMove)
             setPossibleMoves(allMoves.get(square).validMoves)
-            //todo set special moves?
         } else {
             console.log("That is not your piece!");
             toggleModal("That piece cannot be moved");                       
@@ -126,7 +109,8 @@ const Game = (props) => {
                 specialMove = specialMoves.get(end)
                 console.log(specialMove)
                 if (specialMove == "Promotion") {
-                    promotionType = selectPromotionType();
+                    setSelectPromotion(true)
+                    promotionType = promotion;
                 }
             }
         }
@@ -142,14 +126,8 @@ const Game = (props) => {
         DataService.movePiece(move, gameId)
             .then(res => {
                 console.log(res.data);
-                // setIsWhite((prev) => !prev);                
-                // props.setTheBoard(res.data);
-                updateTheBoard(res.data)
-                // setPieces(new Map(Object.entries(res.data.pieces).map(([k, v]) => [+k, v])))
-                // setStatus(res.data.status);                
+                updateTheBoard(res.data)         
                 setShowCheck(true);
-                // setAllMoves(res.data.allMoves);
-                // setAllMoves(new Map(Object.entries(res.data.allMoves)));
             })
             .catch(err => {                
                 console.log(err.response.data)
@@ -157,9 +135,11 @@ const Game = (props) => {
             })
     }
 
-    const selectPromotionType  = e => {   
-        return "Queen";
+    const choosePromotion = e => {   
+        console.log("changing to", e)
+        setPromotion(e.target.value)
     }
+
   
     const forfeit = forfeit => {
         DataService.forfeit(gameId)
@@ -196,13 +176,23 @@ const Game = (props) => {
                     <div id="board">
                         <Modal isOpen={showModal} id="model" ariaHideApp={false}>
                             <h1 id="error">{errorMessage}</h1> 
-                            <button id="button" onClick={() => setShowModal(false)}>Okay</button>
+                            <button className="button" onClick={() => setShowModal(false)}>Okay</button>
+                        </Modal>
+                        <Modal isOpen={selectPromotion} >
+                            <form onSubmit={this.choosePromotion}>
+                                {props.promotionOptions.map(choice => {
+                                    return (
+                                        <input type="radio" value={choice} name="promotion" onChange={choosePromotion}  />
+                                    )
+                                })}
+                                <button className="button" onClick={() => setSelectPromotion(false)}>Okay</button>
+                            </form>
                         </Modal>
                         <Board pieces={pieces} possibleMoves={possibleMoves} isMove={isMove} selectPiece={selectPiece} selectMove={selectMove}  /> 
                         {/* // {squares} */}
                     </div>                                                                       
                 </div>
-                <MovesList moves={moves} toggleMove={toggleMove} showMoves={showMoves} />             
+                <MovesList moves={moveMessages} toggleMove={toggleMove} showMoves={showMoves} />             
             </div>
             <div id="htag">{generateHeaders(false)}</div>  
         </div>

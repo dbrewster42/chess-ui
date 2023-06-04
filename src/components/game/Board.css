@@ -100,7 +100,7 @@
     color: red;
     font-weight: 900;
 }
-#button {
+.button {
     background-color: blue;
     color: white;
     border-radius: 5px;

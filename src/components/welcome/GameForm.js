@@ -25,11 +25,8 @@ const GameForm = props => {
        
         DataService.startLocalGame(body)
         .then(res => {
-            console.log(res)
-
             let gameId = res.data.id;
             props.setTheBoard(res.data);  
-            console.log("the game id is ", gameId);        
             history.push(`/game/${gameId}`);
         })
         .catch(err => {

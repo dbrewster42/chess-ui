@@ -14,6 +14,8 @@ function App() {
   const [whitePlayer, setWhitePlayer] = useState();
   const [blackPlayer, setBlackPlayer] = useState();
   const [undo, setUndo] = useState(false);
+  let [promotionOptions, setPromotionOptions] = useState();
+
 
   // const showBoard = () => {
   //   DataService.getBoard()
@@ -33,6 +35,7 @@ function App() {
     // setData(data);    
     setWhitePlayer(data.whitePlayer)
     setBlackPlayer(data.blackPlayer)
+    setPromotionOptions(data.promotionOptions)
     // setAllMoves(new Map(Object.entries(data.allMoves)));
   }
 
