@@ -13,22 +13,7 @@ const Details = props => {
     } else if (!props.status.white && backGround === "w details"){
         setBackGround("bl details")
     }
-    // if (!props.status.active && showCheck){
-    //     setShowCheck(false);
-    //     props.toggleModal(props.status.message)
-    // }
-    // if (props.status.check && showCheck){
-    //     setShowCheck(false);
-    //     props.toggleModal("CHECK!")
-    // }
-    // const countPieces = team => {
-    //     // team.map((piece, i).filter(piece.name) => {
-    //     //     <div key={i} className="squares"></div>
-    //     // })
-    //     for (let i =0; i< team.length; i++){
 
-    //     }
-    // };{countPieces(props.status.team)}
     const undo = () => {
         DataService.undo(props.gameId)
         .then(res => {
@@ -46,10 +31,10 @@ const Details = props => {
         DataService.restartGame(props.gameId)
         .then(res => {
             console.log(res);
-            props.setTheBoard(res.data);
-            // props.changeTurn(true);
-            let newId = res.data[64].id;
-            history.push(`/game/${newId}`);
+            // props.setTheBoard(res.data);
+            // // props.changeTurn(true);
+            // let newId = res.data[64].id;
+            // history.push(`/game/${newId}`);
         })
         .catch(err => {
             console.log(err);
@@ -63,7 +48,7 @@ const Details = props => {
 
     return ( 
         <div className={backGround} >  
-            {props.status.active ? <h2>It is {props.status.playerName}'s turn</h2> :
+            {props.status.active ? <h2>It is {props.status.currentPlayer}'s turn</h2> :
             <div>           
                 <h1 className="check">Game Over!</h1>
                 <button className="tooltip" onClick={restart}>RESTART<span className="tooltiptext">Play another game vs the same opponent</span></button>

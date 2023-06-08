@@ -17,22 +17,11 @@ function App() {
   let [promotionOptions, setPromotionOptions] = useState();
 
 
-  // const showBoard = () => {
-  //   DataService.getBoard()
-  //       .then(res => {
-  //           console.log(res.data);
-  //           let newData = res.data;
-  //           setData([...newData]);
-  //       })
-  //       .catch(error => console.log(error))
-  //   }
   const toggleUndo = (allowUndo) => {
     setUndo(allowUndo);
   }
 
   const setTheBoard = data => {
-    //console.log("app", data);
-    // setData(data);    
     setWhitePlayer(data.whitePlayer)
     setBlackPlayer(data.blackPlayer)
     setPromotionOptions(data.promotionOptions)
@@ -48,7 +37,7 @@ function App() {
           <Welcome setTheBoard={setTheBoard} toggleUndo={toggleUndo} />
         </Route>
 
-        <Route exact path={`/game/:gameId`} render={() => <Game whitePlayer={whitePlayer} blackPlayer={blackPlayer} undo={undo} /> } />
+        <Route exact path={`/game/:gameId`} render={() => <Game whitePlayer={whitePlayer} blackPlayer={blackPlayer} promotionOptions={promotionOptions} undo={undo} /> } />
 
       </Switch>
     </Router>
@@ -57,19 +46,3 @@ function App() {
 }
 
 export default App;
-
-// return (
-//   <Router>
-//     <Header />      
-//     <Switch>   
-       
-//       <Route exact path="/">
-//         <Welcome />
-//       </Route>
-
-//       <Route exact path={`/game/:gameId`} render={() => <Game /> } />
-
-//     </Switch>
-//   </Router>
-  
-// );

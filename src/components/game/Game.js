@@ -31,25 +31,22 @@ const Game = (props) => {
     let [promotion, setPromotion] = useState()
 
 
-    if (!status.active && showCheck){
-        setShowCheck(false);
-        toggleModal(status.message); //todo
-    } else if (status.check && showCheck){
+    // if (!status.active && showCheck){
+    //     setShowCheck(false);
+    //     toggleModal(status.message); //todo
+    // } else 
+    if (status.check && showCheck){
         setShowCheck(false);
         toggleModal("CHECK!");
     }
    
-    if (autoToggle && moves.length > 3){
+    if (autoToggle && moveMessages.length > 3){
         setShowMoves(true);
         setAutoToggle(false);
     } 
 
     const toggleMove = () => {
-        if (moves.moves){
-            setShowMoves((prev) => !prev);
-        } else {
-            console.log("No Moves Yet!!")
-        }   
+        setShowMoves((prev) => !prev);
     }
 
     const unselect = () => {
@@ -67,11 +64,14 @@ const Game = (props) => {
 
     const updateTheBoard = data => {
         console.log("app", data);
-        setPieces(new Map(Object.entries(data.pieces).map(([k, v]) => [+k, v])))
         setStatus(data.status)
-        moveMessages.push(data.move)
-        setAllMoves(new Map(Object.entries(data.allMoves)));
-        // setMoves(data.moves);
+        if (status.active) {
+            moveMessages.push(data.move)
+            setPieces(new Map(Object.entries(data.pieces).map(([k, v]) => [+k, v])))
+            setAllMoves(new Map(Object.entries(data.allMoves)));
+        } else {
+            toggleModal(data.move);
+        }
     }
 
     const selectPiece = e => {    
@@ -89,6 +89,7 @@ const Game = (props) => {
             console.log("That is not your piece!");
             toggleModal("That piece cannot be moved");                       
         }       
+
     }
 
     const selectMove = e => {       
@@ -99,7 +100,6 @@ const Game = (props) => {
             return;
         }
         let specialMove = null;
-        let promotionType = null;
 
         console.log("allPossibleMoves", allMoves.get(start))
         if (allMoves.get(start).specialMoves != null) {
@@ -110,7 +110,6 @@ const Game = (props) => {
                 console.log(specialMove)
                 if (specialMove == "Promotion") {
                     setSelectPromotion(true)
-                    promotionType = promotion;
                 }
             }
         }
@@ -119,9 +118,10 @@ const Game = (props) => {
             start,
             end,
             specialMove,
-            promotionType
+            promotion
         }
-        setIsMove(false);     
+        setIsMove(false);
+        setPromotion(null)     
         console.log("move", move);
         DataService.movePiece(move, gameId)
             .then(res => {
@@ -131,7 +131,7 @@ const Game = (props) => {
             })
             .catch(err => {                
                 console.log(err.response.data)
-                toggleModal(err.response.data.errMessage)              
+                toggleModal(err.response.data.message)              
             })
     }
 
@@ -150,7 +150,7 @@ const Game = (props) => {
             .catch(err => {
                 console.log(err);
                 //window.alert(err.response.data.errMessage)
-                toggleModal(err.response.data.errMessage) 
+                toggleModal(err.response.data.message) 
             })
     }
 
@@ -169,7 +169,7 @@ const Game = (props) => {
     
     return ( 
         <div id="main">  
-            <Details status={status} isMove={isMove} unselect={unselect} endTheGame={forfeit} setTheBoard={props.setTheBoard} gameId={gameId} />                                
+            <Details status={status} isMove={isMove} unselect={unselect} endTheGame={forfeit} gameId={gameId} />                                
             <div id="flexHolder">                
                 <div id="totalBoard">
                     <div id="vtag">{generateHeaders(true)}</div>
@@ -179,14 +179,12 @@ const Game = (props) => {
                             <button className="button" onClick={() => setShowModal(false)}>Okay</button>
                         </Modal>
                         <Modal isOpen={selectPromotion} >
-                            <form onSubmit={this.choosePromotion}>
-                                {props.promotionOptions.map(choice => {
-                                    return (
-                                        <input type="radio" value={choice} name="promotion" onChange={choosePromotion}  />
-                                    )
-                                })}
-                                <button className="button" onClick={() => setSelectPromotion(false)}>Okay</button>
-                            </form>
+                            {props.promotionOptions.map(choice => {
+                                return (
+                                    <input type="radio" value={choice} name="promotion" onChange={choosePromotion}  />
+                                )
+                            })}
+                            <submit className="button" onClick={() => setSelectPromotion(false)}>Okay</submit>
                         </Modal>
                         <Board pieces={pieces} possibleMoves={possibleMoves} isMove={isMove} selectPiece={selectPiece} selectMove={selectMove}  /> 
                         {/* // {squares} */}
