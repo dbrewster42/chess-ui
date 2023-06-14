@@ -21,7 +21,7 @@ class DataService {
         return axios.post(`${url}/game/${id}`, body);
     }
 
-    restartLocalGame(body) {
+    restartGame() {
         return axios.post(`${url}/game/restart`)
     }
     requestDraw(id) {

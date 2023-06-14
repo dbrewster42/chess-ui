@@ -15,7 +15,7 @@ const Game = (props) => {
     // const params = useParams();    
     const gameId = useParams().gameId;    
     let [pieces, setPieces] = useState(new Map(Object.entries(defaultPieces).map(([k, v]) => [+k, v])));
-    let [status, setStatus] = useState({ active : true, check : false, isWhite : true });
+    let [status, setStatus] = useState({ active : true, check : false, white : true });
     let [allMoves, setAllMoves] = useState(new Map(Object.entries(initialMoves)));
     let [possibleMoves, setPossibleMoves] = useState([]) 
     let [isMove, setIsMove] = useState(false);
@@ -24,7 +24,7 @@ const Game = (props) => {
     const [moveMessages] = useState([]);
     // let [moves, setMoves] = useState([]);
     let [showModal, setShowModal] = useState(false);
-    let [showCheck, setShowCheck] = useState(true);    
+    // let [showCheck, setShowCheck] = useState(true);    
     let [showMoves, setShowMoves] = useState(false);   
     let [autoToggle, setAutoToggle] = useState(true);
     let [selectPromotion, setSelectPromotion] = useState(false);
@@ -35,15 +35,17 @@ const Game = (props) => {
     //     setShowCheck(false);
     //     toggleModal(status.message); //todo
     // } else 
-    if (status.check && showCheck){
-        setShowCheck(false);
-        toggleModal("CHECK!");
-    }
-   
+    // if (status.check && showCheck){
+    //     setShowCheck(false);
+    //     toggleModal("CHECK!");
+    // }
     if (autoToggle && moveMessages.length > 3){
         setShowMoves(true);
         setAutoToggle(false);
     } 
+    // if (moveMessages.length > 3){
+    //     setShowMoves(true);
+    // } 
 
     const toggleMove = () => {
         setShowMoves((prev) => !prev);
@@ -65,7 +67,11 @@ const Game = (props) => {
     const updateTheBoard = data => {
         console.log("app", data);
         setStatus(data.status)
-        if (status.active) {
+        if (data.status.active) {
+            if (data.status.check) {
+                console.log("Check")
+                toggleModal("CHECK!");
+            }
             moveMessages.push(data.move)
             setPieces(new Map(Object.entries(data.pieces).map(([k, v]) => [+k, v])))
             setAllMoves(new Map(Object.entries(data.allMoves)));
@@ -108,8 +114,10 @@ const Game = (props) => {
             if (specialMoves.has(end)) {
                 specialMove = specialMoves.get(end)
                 console.log(specialMove)
-                if (specialMove == "Promotion") {
+                if (specialMove === "Promotion") {
+                    promotion = "QUEEN"
                     setSelectPromotion(true)
+                    //todo await
                 }
             }
         }
@@ -121,13 +129,13 @@ const Game = (props) => {
             promotion
         }
         setIsMove(false);
-        setPromotion(null)     
+        // setPromotion(null);     
         console.log("move", move);
         DataService.movePiece(move, gameId)
             .then(res => {
                 console.log(res.data);
                 updateTheBoard(res.data)         
-                setShowCheck(true);
+                // setShowCheck(true);
             })
             .catch(err => {                
                 console.log(err.response.data)
@@ -136,16 +144,20 @@ const Game = (props) => {
     }
 
     const choosePromotion = e => {   
-        console.log("changing to", e)
+        console.log("target", e.target)
+        console.log("current", e.currentTarget)
         setPromotion(e.target.value)
     }
 
   
-    const forfeit = forfeit => {
+    const forfeit = () => {
+        console.log("requesting draw")
         DataService.forfeit(gameId)
             .then(res => {
                 console.log(res.data)
-                setStatus(res.data)
+                if (res.data != null) {
+                    setStatus(res.data)
+                }
             })
             .catch(err => {
                 console.log(err);
@@ -157,7 +169,7 @@ const Game = (props) => {
     const generateHeaders = vertical => {
         let newHeader = [];
         const columns = "HGFEDCBA";       
-        for (let i = 8; i > 1; i--){
+        for (let i = 7; i >= 0; i--){
             if (vertical){
                 newHeader.push(<div key={i} className="vsquare">{i + 1}</div>);
             } else {
@@ -178,13 +190,18 @@ const Game = (props) => {
                             <h1 id="error">{errorMessage}</h1> 
                             <button className="button" onClick={() => setShowModal(false)}>Okay</button>
                         </Modal>
-                        <Modal isOpen={selectPromotion} >
-                            {props.promotionOptions.map(choice => {
-                                return (
-                                    <input type="radio" value={choice} name="promotion" onChange={choosePromotion}  />
-                                )
-                            })}
-                            <submit className="button" onClick={() => setSelectPromotion(false)}>Okay</submit>
+                        <Modal isOpen={selectPromotion} id="promotionModel" ariaHideApp={false}>
+                            <div>
+                                {props.promotionOptions && props.promotionOptions.map(choice => {
+                                    return (
+                                        <div key={choice}>
+                                            <input type="radio" value={choice} name="promotion" onChange={choosePromotion}  />
+                                            <label htmlFor={choice}>{choice}</label>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                            <button className="button" onClick={() => setSelectPromotion(false)}>Okay</button>
                         </Modal>
                         <Board pieces={pieces} possibleMoves={possibleMoves} isMove={isMove} selectPiece={selectPiece} selectMove={selectMove}  /> 
                         {/* // {squares} */}

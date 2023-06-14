@@ -18,7 +18,7 @@ const Details = props => {
         DataService.undo(props.gameId)
         .then(res => {
             console.log(res);
-            props.setTheBoard(res.data); //todo remove
+            //props.setTheBoard(res.data); //todo
             // props.changeTurn();
         })
         .catch(err => {
@@ -26,19 +26,20 @@ const Details = props => {
             window.alert(err.response.data.errMessage)
         })
     }
-    
+
     const restart = () => {
         DataService.restartGame(props.gameId)
         .then(res => {
             console.log(res);
+            // let gameId = res.data.id;
             // props.setTheBoard(res.data);
             // // props.changeTurn(true);
-            // let newId = res.data[64].id;
-            // history.push(`/game/${newId}`);
+            history.push(`/game/${res.data.id}`);
         })
         .catch(err => {
             console.log(err);
-            window.alert(err.response.data.errMessage)
+            window.alert(err.response.data.message)
+            // toggleModal(err.response.data.message) 
         })
     }
 
@@ -61,7 +62,7 @@ const Details = props => {
             {props.status.active &&
             <div>                
                 {/* {props.isMove ? <button className="detailButtons" onClick={props.specialMove}>Special Move</button> : <button className="detailButtons" onClick={() => props.endTheGame(true)}>Forfeit</button> } */}
-                {props.isMove ? <button className="detailButtons" onClick={props.unselect}>Unselect Piece</button> : <button className="detailButtons" onClick={() => props.endTheGame(false)}>Draw</button> } 
+                {props.isMove ? <button className="detailButtons" onClick={props.unselect}>Unselect Piece</button> : <button className="detailButtons" onClick={() => props.endTheGame(false)}>Request Draw</button> } 
                 {props.isMove ? <button className="detailButtons" onClick={props.toggleMove}>Toggle Sidebar</button> : props.undo && <button className="detailButtons" onClick={() => undo()}>Undo</button> }                
                 {/* {props.status.check && <h1 className="check">You must move out of check!</h1>}                 */}
             </div> }
