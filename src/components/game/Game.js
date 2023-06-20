@@ -5,7 +5,7 @@ import Details from './Details';
 import MovesList from './MovesList';
 import Board from './Board';
 import Modal from "react-modal";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import defaultPieces from "../../data/default-pieces.json";
 import initialMoves from "../../data/initial-moves.json";
 
@@ -13,6 +13,7 @@ import initialMoves from "../../data/initial-moves.json";
 
 const Game = (props) => { 
     // const params = useParams();    
+    const history = useHistory();
     const gameId = useParams().gameId;    
     let [pieces, setPieces] = useState(new Map(Object.entries(defaultPieces).map(([k, v]) => [+k, v])));
     let [status, setStatus] = useState({ active : true, check : false, white : true });
@@ -67,13 +68,13 @@ const Game = (props) => {
     const updateTheBoard = data => {
         console.log("app", data);
         setStatus(data.status)
+        moveMessages.push(data.move)
+        setPieces(new Map(Object.entries(data.pieces).map(([k, v]) => [+k, v])))
         if (data.status.active) {
             if (data.status.check) {
                 console.log("Check")
                 toggleModal("CHECK!");
             }
-            moveMessages.push(data.move)
-            setPieces(new Map(Object.entries(data.pieces).map(([k, v]) => [+k, v])))
             setAllMoves(new Map(Object.entries(data.allMoves)));
         } else {
             toggleModal(data.move);
@@ -161,9 +162,27 @@ const Game = (props) => {
             })
             .catch(err => {
                 console.log(err);
-                //window.alert(err.response.data.errMessage)
                 toggleModal(err.response.data.message) 
             })
+    }
+
+    const restart = () => {
+        let request = { user1: props.whitePlayer, user2: props.blackPlayer }
+        DataService.restartGame(request)
+        .then(res => {
+            console.log(res);
+            history.push(`/game/${res.data.id}`);
+            setAllMoves(new Map(Object.entries(initialMoves)))
+            setPieces(new Map(Object.entries(defaultPieces).map(([k, v]) => [+k, v])))
+        })
+        .catch(err => {
+            console.log(err);
+            toggleModal(err.response.data.message) 
+        })
+    }
+
+    const newGame = () => {
+        history.push('/');
     }
 
     const generateHeaders = vertical => {
@@ -181,7 +200,7 @@ const Game = (props) => {
     
     return ( 
         <div id="main">  
-            <Details status={status} isMove={isMove} unselect={unselect} endTheGame={forfeit} gameId={gameId} />                                
+            <Details status={status} isMove={isMove} unselect={unselect} endTheGame={forfeit} newGame={newGame} restart={restart} />                                
             <div id="flexHolder">                
                 <div id="totalBoard">
                     <div id="vtag">{generateHeaders(true)}</div>

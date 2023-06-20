@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import "../../App.css"
 import DataService from '../../service/DataService';
-import { useHistory } from 'react-router-dom';
 
 const Details = props => {
-    //console.log(props.status);
     let [backGround, setBackGround] = useState("w details")
-    const history = useHistory();
     
     if (props.status.white && backGround === "bl details"){
         setBackGround("w details")
@@ -18,8 +15,6 @@ const Details = props => {
         DataService.undo(props.gameId)
         .then(res => {
             console.log(res);
-            //props.setTheBoard(res.data); //todo
-            // props.changeTurn();
         })
         .catch(err => {
             console.log(err);
@@ -27,33 +22,13 @@ const Details = props => {
         })
     }
 
-    const restart = () => {
-        DataService.restartGame(props.gameId)
-        .then(res => {
-            console.log(res);
-            // let gameId = res.data.id;
-            // props.setTheBoard(res.data);
-            // // props.changeTurn(true);
-            history.push(`/game/${res.data.id}`);
-        })
-        .catch(err => {
-            console.log(err);
-            window.alert(err.response.data.message)
-            // toggleModal(err.response.data.message) 
-        })
-    }
-
-    const newGame = () => {
-        history.push('/');
-    }
-
     return ( 
         <div className={backGround} >  
-            {props.status.active ? <h2>It is {props.status.currentPlayer}'s turn</h2> :
+            {props.status.active && props.status.currentPlayer ? <h2>It is {props.status.currentPlayer}'s turn</h2> :
             <div>           
                 <h1 className="check">Game Over!</h1>
-                <button className="tooltip" onClick={restart}>RESTART<span className="tooltiptext">Play another game vs the same opponent</span></button>
-                <button className="tooltip" onClick={newGame}>NEW GAME<span className="tooltiptext">Play a game vs a different opponent</span></button>
+                <button className="tooltip" onClick={props.restart}>RESTART<span className="tooltiptext">Play another game vs the same opponent</span></button>
+                <button className="tooltip" onClick={props.newGame}>NEW GAME<span className="tooltiptext">Play a game vs a different opponent</span></button>
             </div>}                          
                        
             {/* <p>{props.status.team.length} Pieces</p> */}

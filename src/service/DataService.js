@@ -21,8 +21,8 @@ class DataService {
         return axios.post(`${url}/game/${id}`, body);
     }
 
-    restartGame() {
-        return axios.post(`${url}/game/restart`)
+    restartGame(body) {
+        return axios.post(`${url}/game/restart`, body)
     }
     requestDraw(id) {
         return axios.post(`${url}/game/${id}/draw`);
