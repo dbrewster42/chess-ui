@@ -7,28 +7,25 @@ import {
 } from "react-router-dom";
 import Header from "./components/header/Header"
 import Welcome from "./components/welcome/Welcome"
-import Board from "./components/game/Board"
+import Game from "./components/game/Game"
 
 function App() {
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
+  const [whitePlayer, setWhitePlayer] = useState();
+  const [blackPlayer, setBlackPlayer] = useState();
   const [undo, setUndo] = useState(false);
+  let [promotionOptions, setPromotionOptions] = useState();
 
-  // const showBoard = () => {
-  //   DataService.getBoard()
-  //       .then(res => {
-  //           console.log(res.data);
-  //           let newData = res.data;
-  //           setData([...newData]);
-  //       })
-  //       .catch(error => console.log(error))
-  //   }
+
   const toggleUndo = (allowUndo) => {
     setUndo(allowUndo);
   }
 
   const setTheBoard = data => {
-    //console.log("app", data);
-    setData([...data]);    
+    setWhitePlayer(data.whitePlayer)
+    setBlackPlayer(data.blackPlayer)
+    setPromotionOptions(data.promotionOptions)
+    // setAllMoves(new Map(Object.entries(data.allMoves)));
   }
 
   return (
@@ -40,7 +37,7 @@ function App() {
           <Welcome setTheBoard={setTheBoard} toggleUndo={toggleUndo} />
         </Route>
 
-        <Route exact path={`/game/:gameId`} render={() => <Board data={data} setTheBoard={setTheBoard} undo={undo} /> } />
+        <Route exact path={`/game/:gameId`} render={() => <Game whitePlayer={whitePlayer} blackPlayer={blackPlayer} promotionOptions={promotionOptions} undo={undo} /> } />
 
       </Switch>
     </Router>

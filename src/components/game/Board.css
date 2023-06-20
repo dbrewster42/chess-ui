@@ -11,6 +11,19 @@
 #flexHolder {
     display: flex;
 }
+#board {   
+    border: 2px solid royalblue;
+    display: inline-block;
+    flex-direction: column;
+    width: 800px;
+    height: 817px;
+}
+#totalBoard {
+    display: inline-flex;
+    margin-left: 4%;
+    width: 850px;
+    height: 816px;
+}
 .rows {
     display: flex;
     flex-direction: row;
@@ -27,6 +40,11 @@
 }
 .g {    
     background-color: #8f4306;
+}
+.s {    
+    /* background-color: rgb(26, 33, 36); */
+    background-color: green;
+
 }
 .g:hover {
     /* background-color: rgb(65, 65, 236); */
@@ -46,12 +64,14 @@
     padding-top: 30px;
     padding-bottom: 30px;
     width: 40px;
+    color: red;
     font-size: x-large;
 } 
 .hsquare {
     width: 100px;
     height: 20px;
     text-emphasis: bold;
+    color: red;
     font-size: x-large;
 }
 #vtag {
@@ -70,19 +90,6 @@
     margin-left: 7.5%;
 }
 
-#board {   
-    border: 2px solid royalblue;
-    display: inline-block;
-    flex-direction: column;
-    width: 800px;
-    height: 817px;
-}
-#totalBoard {
-    display: inline-flex;
-    margin-left: 4%;
-    width: 850px;
-    height: 816px;
-}
 #model {
     background-color: wheat;
     margin: auto;
@@ -93,7 +100,7 @@
     color: red;
     font-weight: 900;
 }
-#button {
+.button {
     background-color: blue;
     color: white;
     border-radius: 5px;

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import GameForm from "./GameForm"
 import PlayerForm from "./PlayerForm"
 import "./Welcome.css"
 import pic from "../header/4.jpg"
@@ -6,7 +7,7 @@ import pic2 from "../header/2.jpg"
 
 const Welcome = props => {
     //console.log("Welcome to the ", props)
-    const [showsForm, setShowsForm] = useState(false);
+    const [showsForm, setShowsForm] = useState(true);
 
     const toggleForm = e => {
         setShowsForm((prevShows) => !prevShows);
@@ -17,9 +18,9 @@ const Welcome = props => {
             {/* <Link to="/game"><h1 className="start">Click Here to Begin</h1></Link> */}
             <h1 className="start" onClick={toggleForm}>{">>>>>>>>>"} Start A Game {"<<<<<<<<<<"} </h1>
             {showsForm ? 
-            <PlayerForm setTheBoard={props.setTheBoard} toggleUndo={props.toggleUndo} />
+                <PlayerForm setTheBoard={props.setTheBoard} />
             : 
-            <i></i>
+                <GameForm setTheBoard={props.setTheBoard}  />
             }
 
 
@@ -28,7 +29,7 @@ const Welcome = props => {
                 <div id="left">
                     <h2 className="blues">Gameplay Control</h2>
 
-                    <p>Click on a piece to select it. The tile will turn blue to confirm that you have selected the piece. Two new options will pop up in the header- Unselect and Special Move. If you wish to select a different piece, 
+                    {/* <p>Click on a piece to select it. The tile will turn blue to confirm that you have selected the piece. Two new options will pop up in the header- Unselect and Special Move. If you wish to select a different piece, 
                         click on unselect or click the piece again. Then, if not making a Special Move, you simply click on the tile you wish to move your piece to. 
                     </p>
                     <p>
@@ -36,7 +37,8 @@ const Welcome = props => {
                         the program will Castle for you. If you wish to perform <em>en Passant</em>, click on the <strong>Pawn</strong> you wish to use and then click on Special Move. The program will
                         perform the special move for you if the conditions are valid. See below for proper Castling and en Passant conditions.                       
                     </p> 
-                    <p>If you attempt to make a move that is not legal, the move will not be processed and then you will be notified to try again</p>
+                    <p>If you attempt to make a move that is not legal, the move will not be processed and then you will be notified to try again</p> */}
+
                     {/* <p>Click on the piece you wish to move, an "Unselect" button will pop up and you can click on that to choose a different piece or, if you are not
                     making a special move, select the location you wish to move your piece to. If your move is not a valid chess move, you will be prompted to try again.
                     The only exceptions are with Castles and en Passant. If you wish to castle, select the Rook you wish to use and then click on the Special Move button.
