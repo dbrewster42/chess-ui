@@ -69,7 +69,9 @@ const Game = (props) => {
         console.log("app", data);
         setStatus(data.status)
         moveMessages.push(data.move)
-        setPieces(new Map(Object.entries(data.pieces).map(([k, v]) => [+k, v])))
+        if (data.pieces) {
+            setPieces(new Map(Object.entries(data.pieces).map(([k, v]) => [+k, v])))
+        }
         if (data.status.active) {
             if (data.status.check) {
                 console.log("Check")
