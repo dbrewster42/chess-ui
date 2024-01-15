@@ -19,12 +19,8 @@ class DataService {
     restartGame(body) {
         return axios.post(`${url}/chess/restart`, body)
     }
-    rejoinGame(body) {
-        return axios.get(`${url}/chess/rejoin`, body)
-    }
-    rejoinGame1(body) {
-        console.log(body)
-        return axios.post(`${url}/chess/rejoin`, body)
+    rejoinGame(name) {
+        return axios.post(`${url}/chess/rejoin`, name)
     }
     rejoinGameById(id) {
         return axios.get(`${url}/chess/rejoin/${id}`)

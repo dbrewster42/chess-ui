@@ -16,7 +16,7 @@ const Game = (props) => {
     const history = useHistory();
     const gameId = useParams().gameId;    
     let [pieces, setPieces] = useState(new Map(Object.entries(defaultPieces).map(([k, v]) => [+k, v])));
-    let [status, setStatus] = useState({ active : true, check : false, white : true });
+    let [status, setStatus] = useState({ active : true, check : false, white : true, currentPlayer : "Player1" });
     let [allMoves, setAllMoves] = useState(new Map(Object.entries(initialMoves)));
     let [possibleMoves, setPossibleMoves] = useState([]) 
     let [isMove, setIsMove] = useState(false);
@@ -29,7 +29,7 @@ const Game = (props) => {
     let [showMoves, setShowMoves] = useState(false);   
     let [autoToggle, setAutoToggle] = useState(true);
     let [selectPromotion, setSelectPromotion] = useState(false);
-    let [promotion, setPromotion] = useState()
+    let [promotion, setPromotion] = useState("QUEEN")
 
 
     // if (!status.active && showCheck){
@@ -118,7 +118,6 @@ const Game = (props) => {
                 specialMove = specialMoves.get(end)
                 console.log(specialMove)
                 if (specialMove === "Promotion") {
-                    promotion = "QUEEN"
                     setSelectPromotion(true)
                     //todo await
                 }
@@ -150,12 +149,14 @@ const Game = (props) => {
         console.log("target", e.target)
         console.log("current", e.currentTarget)
         setPromotion(e.target.value)
+        console.log("promot", promotion)
     }
 
   
-    const forfeit = () => {
-        console.log("requesting draw")
-        DataService.forfeit(gameId)
+    const endTheGame = isForfeit => {
+        console.log("requesting end")
+        if (isForfeit) {
+            DataService.forfeit(gameId)
             .then(res => {
                 console.log(res.data)
                 if (res.data != null) {
@@ -166,6 +167,20 @@ const Game = (props) => {
                 console.log(err);
                 toggleModal(err.response.data.message) 
             })
+        } else {
+            DataService.requestDraw(gameId)
+            .then(res => {
+                console.log(res.data)
+                if (res.data != null) {
+                    setStatus(res.data)
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                toggleModal(err.response.data.message) 
+            })
+        }
+
     }
 
     const restart = () => {
@@ -174,6 +189,7 @@ const Game = (props) => {
         .then(res => {
             console.log(res);
             history.push(`/game/${res.data.id}`);
+            moveMessages = []
             setAllMoves(new Map(Object.entries(initialMoves)))
             setPieces(new Map(Object.entries(defaultPieces).map(([k, v]) => [+k, v])))
         })
@@ -202,7 +218,7 @@ const Game = (props) => {
     
     return ( 
         <div id="main">  
-            <Details status={status} isMove={isMove} unselect={unselect} endTheGame={forfeit} newGame={newGame} restart={restart} />                                
+            <Details status={status} isMove={isMove} unselect={unselect} endTheGame={endTheGame} newGame={newGame} restart={restart} />                                
             <div id="flexHolder">                
                 <div id="totalBoard">
                     <div id="vtag">{generateHeaders(true)}</div>

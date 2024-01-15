@@ -77,10 +77,8 @@ const PlayerForm = props => {
         DataService.startLocalGame(body)
         .then(res => {
             console.log(res)
-            let gameId = res.data.id;
             props.setTheBoard(res.data);  
-        //     console.log("the game id is ", gameId);        
-            history.push(`/game/${gameId}`);
+            history.push(`/game/${res.data.id}`);
         })
         .catch(err => {
             console.log(err)
@@ -88,11 +86,9 @@ const PlayerForm = props => {
     }
     const rejoinGame = (e) => {
         e.preventDefault(); 
-        const body = { user1 : name };
-        console.log(body);
-        // DataService.rejoinGame(body)
-        DataService.rejoinGame1(body)
+        DataService.rejoinGame(name)
         .then(res => {
+            console.log(res)
             props.setTheBoard(res.data);  
             history.push(`/game/${res.data.id}`);
         })
