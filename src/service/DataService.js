@@ -3,7 +3,7 @@ import axios from 'axios'
 //const proxyurl = "https://cors-anywhere.herokuapp.com/";
 const url = 'http://localhost:8080';
 
-class DataService {    
+class DataService {
 
     createUser(body) {
         return axios.post(`${url}/user`, body)
@@ -19,8 +19,8 @@ class DataService {
     restartGame(body) {
         return axios.post(`${url}/chess/restart`, body)
     }
-    rejoinGame(name) {
-        return axios.post(`${url}/chess/rejoin`, name)
+    rejoinGame(body) {
+        return axios.post(`${url}/chess/rejoin`, body)
     }
     rejoinGameById(id) {
         return axios.get(`${url}/chess/rejoin/${id}`)
@@ -38,10 +38,10 @@ class DataService {
     forfeit(id) {
         return axios.post(`${url}/chess/${id}/forfeit`);
     }
-    undo(id){
+    undo(id) {
         return axios.post(`${url}/chess/${id}/undo`);
     }
-   
+
 }
- 
+
 export default new DataService();

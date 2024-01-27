@@ -86,7 +86,11 @@ const PlayerForm = props => {
     }
     const rejoinGame = (e) => {
         e.preventDefault(); 
-        DataService.rejoinGame(name)
+        console.log(name)
+        const body = {                
+            user1 : name
+        }
+        DataService.rejoinGame(body)
         .then(res => {
             console.log(res)
             props.setTheBoard(res.data);  

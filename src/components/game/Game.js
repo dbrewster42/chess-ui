@@ -85,18 +85,17 @@ const Game = (props) => {
 
     const selectPiece = e => {    
         let square = e.currentTarget.id; 
-        console.log("square", square)          
-        // if ((props.pieces.get(count).startsWith("w") && isWhite) || (props.pieces.get(count).startsWith("b") && !isWhite)){
+        // console.log("square", square)          
         console.log("allMoves", allMoves)          
 
         if (allMoves.has(square)){
             setStart(square);
             setIsMove(true);
-            console.log("selected", square, "which can move to", allMoves.get(square), isMove)
+            // console.log("selected", square, "which can move to", allMoves.get(square), isMove)
             setPossibleMoves(allMoves.get(square).validMoves)
         } else {
-            console.log("That is not your piece!");
-            toggleModal("That piece cannot be moved");                       
+            // console.log("That is not your piece!");
+            toggleModal("That is not your piece");                       
         }       
 
     }
@@ -123,12 +122,12 @@ const Game = (props) => {
                 }
             }
         }
-
+        
         const move = {
             start,
             end,
             specialMove,
-            promotion
+            promotionType : promotion
         }
         setIsMove(false);
         // setPromotion(null);     
@@ -146,8 +145,8 @@ const Game = (props) => {
     }
 
     const choosePromotion = e => {   
-        console.log("target", e.target)
-        console.log("current", e.currentTarget)
+        console.log("target", e.target.value)
+        // console.log("current", e.currentTarget)
         setPromotion(e.target.value)
         console.log("promot", promotion)
     }
