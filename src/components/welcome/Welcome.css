@@ -64,6 +64,9 @@ p {
     margin-left: 25%;
     color: blue;
 }
+#flex {
+    display: flex;
+}
 
 form {
     color: rgb(94, 176, 204);

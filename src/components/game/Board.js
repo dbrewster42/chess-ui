@@ -54,7 +54,7 @@ const Board = (props) => {
             let squareStyle;
             let count = j * 10 + i;
             if (props.possibleMoves.includes(count)){
-                console.log(count, "is a possible move")
+                // console.log(count, "is a possible move")
                 squareStyle = "squares s"
             } else {
                 if ((i + j) % 2 === 1){

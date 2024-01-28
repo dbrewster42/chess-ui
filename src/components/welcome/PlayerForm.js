@@ -77,10 +77,24 @@ const PlayerForm = props => {
         DataService.startLocalGame(body)
         .then(res => {
             console.log(res)
-            let gameId = res.data.id;
             props.setTheBoard(res.data);  
-        //     console.log("the game id is ", gameId);        
-            history.push(`/game/${gameId}`);
+            history.push(`/game/${res.data.id}`);
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+    const rejoinGame = (e) => {
+        e.preventDefault(); 
+        console.log(name)
+        const body = {                
+            user1 : name
+        }
+        DataService.rejoinGame(body)
+        .then(res => {
+            console.log(res)
+            props.setTheBoard(res.data);  
+            history.push(`/game/${res.data.id}`);
         })
         .catch(err => {
             console.log(err)
@@ -88,24 +102,36 @@ const PlayerForm = props => {
     }
 
     return ( 
-        <div>
+        <div id="flex"> 
+            {/* <button className='options' onClick={()=>}>Play Local Game</button>
+            <button className='options' onClick={()=>}>Create Account</button>
+            <button className='options' onClick={()=>}>Log In</button>
+            <button className='options' onClick={()=>}>Play Online Game</button>
+            <button className='options' onClick={()=>}>Rejoin Game</button> */}
             <form onSubmit={makePlayer}>
-                Please Enter Your Name and a Valid Email To Create a New Account<br /><br />
+                Create New Account<br />
                 name  <input type="text" name="name" onChange={handleName} value={name} /><br />
                 email <input type="text" name="email" onChange={handleEmail} value={email} /><br />
                 <input type="submit" value="Submit" />
             </form>
+            <form onSubmit={startLocalGame}>
+                Play a Local Game<br />
+                white name  <input type="text" name="name" onChange={handleName} value={name} /><br />
+                black name  <input type="text" name="name2" onChange={handleName2} value={name2} /><br />
+                <input type="submit" value="Submit" />
+            </form>
+            <form onSubmit={rejoinGame}>
+                Rejoin Game<br />
+                name  <input type="text" name="name" onChange={handleName} value={name} /><br />
+                <input type="submit" value="Submit" />
+            </form>
+
             {/* <form onSubmit={login}>
                 Please Log In<br /><br />
                 name  <input type="text" name="name" onChange={handleName} value={name} /><br />
                 <input type="submit" value="Submit" />
             </form> */}
-            <form onSubmit={startLocalGame}>
-                Start a Local Game<br /><br />
-                white name  <input type="text" name="name" onChange={handleName} value={name} /><br />
-                black name  <input type="text" name="name2" onChange={handleName2} value={name2} /><br />
-                <input type="submit" value="Submit" />
-            </form>
+           
             {/* <Submit>Find a Game</Submit> */}
         </div>
 
