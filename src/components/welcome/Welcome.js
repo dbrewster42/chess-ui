@@ -85,12 +85,12 @@ const Welcome = props => {
                    
                     
                     <div id="lean">
-                        <h2 className="blue" onClick={toggleForm}>Play a Game Now</h2>
+                        {/* <h2 className="blue" onClick={toggleForm}>Play a Game Now</h2>
                         {showsForm ? 
                             <PlayerForm setTheBoard={props.setTheBoard} toggleUndo={props.toggleUndo} />
                             : 
                             <i></i>
-                        }                        
+                        }                         */}
                         <img className="im2" src={pic2} alt="pic" /> 
                     </div>
                     

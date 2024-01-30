@@ -115,22 +115,26 @@ const Game = (props) => {
             console.log("special moves", specialMoves)
             if (specialMoves.has(end)) {
                 specialMove = specialMoves.get(end)
-                console.log(specialMove)
-                if (specialMove === "Promotion") {
-                    setSelectPromotion(true)
-                    //todo await
-                }
+                // console.log(specialMove)
+                // if (specialMove === "Promotion") {
+                //     setSelectPromotion(true)
+                //     //todo await
+                // }
             }
         }
         
+        // const move = {
+        //     start,
+        //     end,
+        //     specialMove,
+        //     promotionType : promotion
+        // }
         const move = {
             start,
             end,
-            specialMove,
-            promotionType : promotion
+            specialMove
         }
         setIsMove(false);
-        // setPromotion(null);     
         console.log("move", move);
         DataService.movePiece(move, gameId)
             .then(res => {
