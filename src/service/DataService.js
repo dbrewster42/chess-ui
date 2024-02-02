@@ -16,6 +16,9 @@ class DataService {
     startLocalGame(body) {
         return axios.post(`${url}/chess`, body)
     }
+    startQuickGame() {
+        return axios.post(`${url}/chess/quick-game`)
+    }
     restartGame(body) {
         return axios.post(`${url}/chess/restart`, body)
     }

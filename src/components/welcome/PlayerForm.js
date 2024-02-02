@@ -75,6 +75,18 @@ const PlayerForm = props => {
             console.log(err)
         })
     }
+    const startQuickGame = (e) => {
+        e.preventDefault(); 
+        DataService.startQuickGame()
+        .then(res => {
+            console.log(res)
+            props.setTheBoard(res.data);  
+            history.push(`/game/${res.data.id}`);
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
     const rejoinGame = (e) => {
         e.preventDefault(); 
         console.log(name)
@@ -109,6 +121,10 @@ const PlayerForm = props => {
                 Play a Local Game<br />
                 white name  <input type="text" name="name" onChange={handleName} value={name} /><br />
                 black name  <input type="text" name="name2" onChange={handleName2} value={name2} /><br />
+                <input type="submit" value="Submit" />
+            </form>
+            <form onSubmit={startQuickGame}>
+                Play a Quick Game<br />
                 <input type="submit" value="Submit" />
             </form>
             {/* <form onSubmit={rejoinGame}>

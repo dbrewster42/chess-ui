@@ -22,31 +22,18 @@ const Game = (props) => {
     let [isMove, setIsMove] = useState(false);
     let [start, setStart] = useState(88);
     let [errorMessage, setErrorMessage] = useState('');
-    const [moveMessages] = useState([]);
-    // let [moves, setMoves] = useState([]);
+    let [moveMessages] = useState([]);
     let [showModal, setShowModal] = useState(false);
-    // let [showCheck, setShowCheck] = useState(true);    
     let [showMoves, setShowMoves] = useState(false);   
     let [autoToggle, setAutoToggle] = useState(true);
     let [selectPromotion, setSelectPromotion] = useState(false);
     let [promotion, setPromotion] = useState("QUEEN")
 
 
-    // if (!status.active && showCheck){
-    //     setShowCheck(false);
-    //     toggleModal(status.message); //todo
-    // } else 
-    // if (status.check && showCheck){
-    //     setShowCheck(false);
-    //     toggleModal("CHECK!");
-    // }
     if (autoToggle && moveMessages.length > 3){
         setShowMoves(true);
         setAutoToggle(false);
     } 
-    // if (moveMessages.length > 3){
-    //     setShowMoves(true);
-    // } 
 
     const toggleMove = () => {
         setShowMoves((prev) => !prev);
@@ -115,24 +102,18 @@ const Game = (props) => {
             console.log("special moves", specialMoves)
             if (specialMoves.has(end)) {
                 specialMove = specialMoves.get(end)
-                // console.log(specialMove)
                 // if (specialMove === "Promotion") {
                 //     setSelectPromotion(true)
-                //     //todo await
+                //     //todo 
                 // }
             }
         }
         
-        // const move = {
-        //     start,
-        //     end,
-        //     specialMove,
-        //     promotionType : promotion
-        // }
         const move = {
             start,
             end,
             specialMove
+        //     promotionType : promotion
         }
         setIsMove(false);
         console.log("move", move);
@@ -140,7 +121,6 @@ const Game = (props) => {
             .then(res => {
                 console.log(res.data);
                 updateTheBoard(res.data)         
-                // setShowCheck(true);
             })
             .catch(err => {                
                 console.log(err.response.data)
