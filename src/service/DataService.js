@@ -1,6 +1,5 @@
 import axios from 'axios'
 
-//const proxyurl = "https://cors-anywhere.herokuapp.com/";
 const url = 'http://localhost:8080';
 
 class DataService {
@@ -14,35 +13,35 @@ class DataService {
 
 
     startLocalGame(body) {
-        return axios.post(`${url}/chess`, body)
+        return axios.post(`${url}/game`, body)
     }
     startQuickGame() {
-        return axios.post(`${url}/chess/quick-game`)
+        return axios.post(`${url}/game/quick-game`)
     }
     restartGame(body) {
-        return axios.post(`${url}/chess/restart`, body)
+        return axios.post(`${url}/game/restart`, body)
     }
     rejoinGame(body) {
-        return axios.post(`${url}/chess/rejoin`, body)
+        return axios.post(`${url}/game/rejoin`, body)
     }
     rejoinGameById(id) {
-        return axios.get(`${url}/chess/rejoin/${id}`)
+        return axios.get(`${url}/game/rejoin/${id}`)
     }
 
     movePiece(body, id) {
-        return axios.post(`${url}/chess/${id}`, body);
+        return axios.post(`${url}/game/${id}`, body);
     }
     getAllMoves(body, id) {
-        return axios.get(`${url}/chess/${id}`, body);
+        return axios.get(`${url}/game/${id}`, body);
     }
     requestDraw(id) {
-        return axios.post(`${url}/chess/${id}/draw`);
+        return axios.post(`${url}/game/${id}/draw`);
     }
     forfeit(id) {
-        return axios.post(`${url}/chess/${id}/forfeit`);
+        return axios.post(`${url}/game/${id}/forfeit`);
     }
     undo(id) {
-        return axios.post(`${url}/chess/${id}/undo`);
+        return axios.post(`${url}/game/${id}/undo`);
     }
 
 }

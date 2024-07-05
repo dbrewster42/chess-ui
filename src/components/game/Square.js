@@ -7,6 +7,12 @@ const Square = props => {
     if (!props.isMove && squareB === "squares b"){
         setSquareB(props.squareStyle);
     }
+    if (!props.isMove && squareB === "squares s" && props.squareStyle !== "squares s"){
+        setSquareB(props.squareStyle);
+    }
+    if (props.squareStyle === "squares s" &&  squareB !== "squares s"){
+        setSquareB('squares s')
+    }
 
     const selectPiece = e => {        
         setSquareB('squares b'); 

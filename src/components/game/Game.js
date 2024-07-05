@@ -28,6 +28,7 @@ const Game = (props) => {
     let [autoToggle, setAutoToggle] = useState(true);
     let [selectPromotion, setSelectPromotion] = useState(false);
     let [promotion, setPromotion] = useState("QUEEN")
+    let [isUpdate, setIsUpdate] = useState(false);
 
 
     if (autoToggle && moveMessages.length > 3){
@@ -54,6 +55,8 @@ const Game = (props) => {
 
     const updateTheBoard = data => {
         console.log("app", data);
+        setPossibleMoves([])
+        setIsUpdate(true)
         setStatus(data.status)
         moveMessages.push(data.move)
         if (data.pieces) {
@@ -68,6 +71,7 @@ const Game = (props) => {
         } else {
             toggleModal(data.move);
         }
+        setIsUpdate(false)
     }
 
     const selectPiece = e => {    
@@ -223,7 +227,7 @@ const Game = (props) => {
                             </div>
                             <button className="button" onClick={() => setSelectPromotion(false)}>Okay</button>
                         </Modal>
-                        <Board pieces={pieces} possibleMoves={possibleMoves} isMove={isMove} selectPiece={selectPiece} selectMove={selectMove}  /> 
+                        <Board pieces={pieces} possibleMoves={possibleMoves} isMove={isMove} selectPiece={selectPiece} selectMove={selectMove} isUpdate={isUpdate}  /> 
                         {/* // {squares} */}
                     </div>                                                                       
                 </div>
