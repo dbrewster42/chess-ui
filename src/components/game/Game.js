@@ -42,12 +42,14 @@ const Game = (props) => {
 
     const unselect = () => {
         console.log("unselecting")
-        setIsMove(false);        
+        setIsMove(false);
+        setPossibleMoves([])        
     }
 
     function toggleModal(message){
         setErrorMessage(message);
         setShowModal(true);
+        setPossibleMoves([])
         setTimeout(function(){
             setShowModal(false)
         }, (2500))
@@ -95,7 +97,8 @@ const Game = (props) => {
         console.log("Moving", start, "to", e.currentTarget.id);        
         let end = e.currentTarget.id; 
         if (end === start){
-            setIsMove(false);            
+            setIsMove(false); 
+            setPossibleMoves([])           
             return;
         }
         let specialMove = null;
