@@ -3,6 +3,8 @@ terminal ```npm start```
 
 can only be used locally at this time. 
 
+This is really only a companion piece to display the capabilities of the backend. I am not as interested in UI work so there are a lot of available improvements here.
+
 
 TO DO
 

@@ -26,10 +26,6 @@ const PlayerForm = props => {
             name, 
             email
         }
-        // const body = {                
-        //     name : e.target.name.value, 
-        //     email : e.target.email.value
-        // }
        
         DataService.createUser(body)
         .then(res => {
@@ -40,11 +36,6 @@ const PlayerForm = props => {
         //     } else {
         //         props.toggleUndo(true);
         //     }
-        //     console.log("added player", res);
-        //     let gameId = res.data[64].id;
-        //     props.setTheBoard(res.data);  
-        //     console.log("the game id is ", gameId);        
-        //     history.push(`/game/${gameId}`);
         })
         .catch(err => {
             console.log(err)
@@ -75,6 +66,18 @@ const PlayerForm = props => {
         }
        
         DataService.startLocalGame(body)
+        .then(res => {
+            console.log(res)
+            props.setTheBoard(res.data);  
+            history.push(`/game/${res.data.id}`);
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+    const startQuickGame = (e) => {
+        e.preventDefault(); 
+        DataService.startQuickGame()
         .then(res => {
             console.log(res)
             props.setTheBoard(res.data);  
@@ -120,11 +123,15 @@ const PlayerForm = props => {
                 black name  <input type="text" name="name2" onChange={handleName2} value={name2} /><br />
                 <input type="submit" value="Submit" />
             </form>
-            <form onSubmit={rejoinGame}>
+            <form onSubmit={startQuickGame}>
+                Play a Quick Game<br />
+                <input type="submit" value="Submit" />
+            </form>
+            {/* <form onSubmit={rejoinGame}>
                 Rejoin Game<br />
                 name  <input type="text" name="name" onChange={handleName} value={name} /><br />
                 <input type="submit" value="Submit" />
-            </form>
+            </form> */}
 
             {/* <form onSubmit={login}>
                 Please Log In<br /><br />

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import React from 'react';
 import "./Board.css"
 import Square from './Square';
@@ -12,6 +13,7 @@ function importAll(r) {
   }
 
 const Board = (props) => {  
+    const images = importAll(require.context("../../../public/pics", false, /\.(pn?g)$/));    
     // let [squares, setSquares] = useState(Column());
     // const images = importAll(require.context("../../../public/pics", false, /\.(pn?g)$/));
 
@@ -35,8 +37,12 @@ const Board = (props) => {
     //     setSquares(board)
     //   }, [props.possibleMoves]);
 
+    // useEffect(() => {
+    //     Column()
+    // }, [props.possibleMoves, Column()])
+
     function Column(){   
-        const images = importAll(require.context("../../../public/pics", false, /\.(pn?g)$/));     
+        console.log("rerendering")
         const board = []        
         for (let i = 8; i > 0; i--){
             board.push(Row(i, images));            
@@ -54,7 +60,7 @@ const Board = (props) => {
             let squareStyle;
             let count = j * 10 + i;
             if (props.possibleMoves.includes(count)){
-                // console.log(count, "is a possible move")
+                console.log(count, "is a possible move")
                 squareStyle = "squares s"
             } else {
                 if ((i + j) % 2 === 1){
