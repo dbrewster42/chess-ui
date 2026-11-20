@@ -109,18 +109,18 @@ const Game = (props) => {
             console.log("special moves", specialMoves)
             if (specialMoves.has(end)) {
                 specialMove = specialMoves.get(end)
-                // if (specialMove === "Promotion") {
-                //     setSelectPromotion(true)
-                //     //todo 
-                // }
+                if (specialMove === "Promotion") {
+                    setSelectPromotion(true)
+                    //todo 
+                }
             }
         }
         
         const move = {
             start,
             end,
-            specialMove
-        //     promotionType : promotion
+            specialMove,
+            promotionType : promotion
         }
         setIsMove(false);
         console.log("move", move);
